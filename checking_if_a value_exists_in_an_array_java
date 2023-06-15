@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int arrayLength, userInputNumber; // defines integer to be used
+        boolean verdict,finalVerdict=false;
+        arrayLength = scanner.nextInt();      // gets the arrayLength from input
+        int[] userInputArray = new int[arrayLength];  
+
+        for (int i = 0; i < arrayLength; i++) {       //Initialize the input array
+            userInputArray[i] = scanner.nextInt();
+        }
+
+        userInputNumber = scanner.nextInt();
+        for (int i = 0; i < arrayLength; i++) {
+
+            verdict = userInputArray[i] == userInputNumber; // each value get compared and a verdict is given
+            if(verdict){                                    // if at least one of the verdict was true the final verdict will be true
+              finalVerdict=true;
+            }
+
+        }
+
+        System.out.print(finalVerdict);
+
+    }
+}

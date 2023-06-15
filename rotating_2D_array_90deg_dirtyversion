@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);  // I will try "scanner" as the input method just for giggles this time, probably there are some reasons why I should not. but I will
+        int rows, elements;
+        rows = scanner.nextInt();
+        elements = scanner.nextInt();
+
+        int[][] userInputArray = new int[rows][elements];
+        int[][] outPutArray= new int[elements][rows];
+        int[][] outPutArray2=new int [elements][rows];
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < elements; j++)
+            {
+                userInputArray[i][j] = scanner.nextInt();       // Loads the user Matrix with input values from the user
+            }
+        }
+
+//
+//        for(int[]row:userInputArray){           // used this to check if the input was distributed correctly
+//            System.out.printf("%n");            // makes a new line after the elements in each row have been printed
+//            for(int elementToPrint :row){
+//                System.out.printf("%d ",elementToPrint);  //print out elements of each row
+//            }
+//        }
+        for (int i = 0; i < rows; i++) {                    //elemen = 3
+            for (int j = 0; j < elements; j++){             //elements = 4     j (element level) = i (row level) inorder to have no more elements than there are rows.{
+               int  storedValue=userInputArray[i][j];    // Stores the value of the matrix at position ar row i element j
+                userInputArray[i][j] = outPutArray[j][i]; // Transposes the structure with all values set to 0;
+                outPutArray[j][i]=storedValue;
+
+          //      int transposedRows=elements;
+          //      int transposedElements=rows;
+            }
+        }
+//        System.out.printf("Stored elements value %d%n ",elements ); //OK
+//        System.out.printf("Stored rows value %d %n%n",rows );       //OK
+
+       // for(int[]transposedRow :outPutArray) {
+            for (int i = 0; i < elements; i++) {              //issue with using elements as "rows"
+                for (int j = 0; j < rows; j++) {                //issue with using the "transposeElements" variable switched to elements
+
+         //           int newI = ((elements - 1) - i);    //3-0, 3-1, 3-2, 3-3, ??3-4   // its over writing something
+                    int newJ = ((rows - 1) - j);    //2-0, 2-1, 2-2               //  its over writing something
+
+                    int storedValues = outPutArray[i][j];
+                    outPutArray2[i][newJ] = storedValues;
+
+                    //   System.out.printf("StoredV NEW %d %n",storedValues );      // NOK
+                   // System.out.printf("READ from row %d %n", i);
+                   // System.out.printf("READ from entry  %d %n%n", j);
+
+
+                   // System.out.printf("Stored changed I value %d %n", newI);
+                   // System.out.printf("Stored change J value %d %n", newJ);
+
+                }
+         //      System.out.print("\n");
+         //   }
+        }
+            for (int i=0;i<elements;i++ ) {              //issue with using elements as "rows"
+                for (int j = 0; j < rows; j++) {
+                    System.out.printf("%d ",outPutArray2[i][j]);
+                }
+                System.out.print("\n");
+            }
+            // makes a new line after the elements in each row have been printed
+
+//            for(int transposedElementToPrint:transposedRow){
+//                System.out.printf("%d ",transposedElementToPrint);  //print out elements of each row
+//            }
+        }
+
+    }

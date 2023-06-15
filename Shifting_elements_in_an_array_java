@@ -1,0 +1,41 @@
+mport java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int arrayLength, newValue=0, newIndex=0; // defines integer to be used
+
+        arrayLength = scanner.nextInt();      // gets the arrayLength from input
+
+
+        int[] userInputArray = new int[arrayLength];
+
+
+
+
+        int[] outputArray = new int[arrayLength];
+
+        for (int i = 0; i < arrayLength; i++) {   //Initialize the input array
+            userInputArray[i] = scanner.nextInt();
+        }
+
+        for (int i = 0; i < arrayLength; i++) {
+
+            if(newIndex < arrayLength-1){
+                newIndex = i + 1;
+                newValue = userInputArray[i];
+            }else if (newIndex == arrayLength - 1) {
+                newIndex = 0;
+                newValue = userInputArray[arrayLength-1];
+            }
+//            System.out.printf("new index %d, ", newIndex);
+//            System.out.printf("new Value %d ",newValue);
+
+            outputArray[newIndex] = newValue;
+        }
+        for (int i = 0; i < arrayLength; i++) {
+            System.out.printf("%d ", outputArray[i]);
+        }
+    }
+}

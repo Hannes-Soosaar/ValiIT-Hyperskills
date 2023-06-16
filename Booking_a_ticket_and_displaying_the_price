@@ -1,0 +1,172 @@
+package cinema;
+import java.util.Scanner;
+/*
+ Read number of rows                        -OK
+ Read number of seats in row                -OK
+ Print out seating                          -OK
+ Read row of seat                           -OK
+ Read seat number in row                    -OK
+ Determine the pricing zone                 -OK // 8:00 might not be usable 11:30 yes needed to write new code.
+ Display ticket price                       -OK
+ Print the seating showing selected seat    -OK
+ */
+
+public class Cinema {
+    public int numberOfRowsNew, numberOfSeatsInRowNew, revenue, seatsTotal, discountSeats = 0, regularSeats = 0;
+    public int selectedRow, selectedSeat;
+    //    public int[][] seatingPlanInScreenRoom=new int[numberOfRowsNew][numberOfSeatsInRowNew];
+    /*
+        Suspect that the above initiation will return an error I was right.
+    */
+    char seat = 'S', Booked = 'B';
+    public int ticketPrice2 = 8;
+    public int ticketPrice1 = 10;
+    public int seatPrice;
+    Scanner scanner = new Scanner(System.in);
+
+    private void getRows() {
+        System.out.print("Enter the number of rows:\n");
+        numberOfRowsNew = scanner.nextInt();
+        numberOfRowsNew=numberOfRowsNew+1;              //adds one for the index
+    }
+
+    private void getNumberOfSeats() {
+        System.out.print("Enter the number of seats in each row:\n");
+        numberOfSeatsInRowNew = scanner.nextInt();
+        numberOfSeatsInRowNew=numberOfSeatsInRowNew+1;   // adds one for the index
+    }
+
+    public void getBooking() {
+        System.out.print("\nEnter a row number:\n");
+        selectedRow = scanner.nextInt();
+        System.out.print("Enter a seat number in that row:\n");
+        selectedSeat = scanner.nextInt();
+//        System.out.printf("Selected row%d%n",selectedRow);            //to double check the input, print to Terminal.
+//        System.out.printf("Selected seat%d%n",selectedSeat);          //to double check the input, print to Terminal.
+
+    }
+    public void generateSeatingPlanInScreenRoom() {
+        getRows();
+        getNumberOfSeats();
+        char[][] seatingPlanInScreenRoom = new char[numberOfRowsNew][numberOfSeatsInRowNew];
+//        System.out.print("Generate Plan In Screen Room called %n");           // Check values in terminal
+//        System.out.printf("Rows %d:", numberOfRowsNew-1);         // Check values in Terminal
+//        System.out.printf("Seats %d:", numberOfSeatsInRowNew-1);    // Check values in Terminal
+
+        for (int i = 0; i < numberOfRowsNew; i++) {
+            for (int j = 0; j < numberOfSeatsInRowNew; j++) {
+                if (i == 0 && j == 0) {
+                    seatingPlanInScreenRoom[i][j] = ' ';
+                } else if (i == 0) {
+                    seatingPlanInScreenRoom[i][j] = (char)((j + '0'));
+//                    System.out.print("seat number\n");            //check values in Terminal
+                } else if (j == 0) {
+                    seatingPlanInScreenRoom[i][j] = (char) (i + '0');
+//                    System.out.print("row number\n");             //check values in Terminal
+                } else {
+                    seatingPlanInScreenRoom[i][j] = seat;
+//                    System.out.print("Seating\n");            //check values in Terminal
+                }
+            }
+        }
+//            System.out.print("Seating Plan In Screen Room called\n");
+                //printing starts below
+                System.out.print("Cinema:\n");
+            for (int i = 0; i < numberOfRowsNew; i++) {
+                for (int j = 0; j < numberOfSeatsInRowNew; j++) {
+                    System.out.printf(" %c", seatingPlanInScreenRoom[i][j]);
+                }
+                System.out.println();
+            }
+
+        }
+
+        public void generateBookedSeatInScreenRoom() {
+            int seatPrice, discountedRows;
+            boolean discountApplicable = false;                     //used to determin if the seat is in a discount row
+            discountedRows = ((numberOfRowsNew) / 2);      //
+            // is the correcting for the index in the matrix
+
+//            System.out.printf("discounted rows %d: %n",discountedRows);             // to double check the input
+
+//            System.out.printf("%d Number of Rows: %n",numberOfRowsNew);         // to double check the input
+//            System.out.printf("%d Number of Seats: %n",numberOfSeatsInRowNew);  // to double check the input
+            seatsTotal = (numberOfSeatsInRowNew-1) * (numberOfRowsNew-1);           // THIS PART KILLED ME FOR 1H!!
+            // did not account for the added index rows!
+//            System.out.printf("%d Total Seats: %n",seatsTotal);
+//  to check the operation math
+            if (seatsTotal > 60) {
+                regularSeats = (numberOfRowsNew / 2) * numberOfSeatsInRowNew;
+//                System.out.printf("%d Total Seats: %n", regularSeats);        //to double check the output of the function
+                discountSeats = (seatsTotal - regularSeats);
+//                System.out.printf("%d Total Seats: %n", discountSeats);       //to double check the output of the function
+                revenue = ((regularSeats * ticketPrice1) + (discountSeats * ticketPrice2));
+                discountApplicable = true;
+            } else if (seatsTotal <= 60) {                                                 // works
+                revenue = seatsTotal * ticketPrice1;
+                discountApplicable = false;
+            }
+
+            System.out.print(discountApplicable);
+
+                if (selectedRow >= discountedRows && discountApplicable) {
+                    seatPrice = ticketPrice2;
+                    System.out.printf("Ticket price: $%d%n", seatPrice);
+//                System.out.printf("Row selected : d%n",selectedRow);
+//                System.out.printf("Row Discount from: %d%n",discountedRows);
+                } else {
+                    seatPrice = ticketPrice1;
+//                System.out.printf("Row selected : $%d%n",selectedRow);
+//                System.out.printf("Row Discount from: $%d%n",discountedRows);
+                    System.out.printf("Ticket price: $%d%n", seatPrice);
+                }
+
+
+        }
+
+    public void generateBookedSeatingPlanInScreenRoom() {
+        char[][] seatingPlanInScreenRoom = new char[numberOfRowsNew][numberOfSeatsInRowNew];
+//        System.out.print("Generate Plan In Screen Room called %n");           // Check values in terminal
+//        System.out.printf("Rows %d:", numberOfRowsNew-1);         // Check values in Terminal
+//        System.out.printf("Seats %d:", numberOfSeatsInRowNew-1);    // Check values in Terminal
+
+        for (int i = 0; i < numberOfRowsNew; i++) {
+            for (int j = 0; j < numberOfSeatsInRowNew; j++) {
+                if (i == 0 && j == 0) {
+                    seatingPlanInScreenRoom[i][j] = ' ';
+                } else if (i == 0) {
+                    seatingPlanInScreenRoom[i][j] = (char)((j + '0'));
+//                    System.out.print("seat number\n");            //check values in Terminal
+                } else if (j == 0) {
+                    seatingPlanInScreenRoom[i][j] = (char) (i + '0');
+//                    System.out.print("row number\n");             //check values in Terminal
+                } else {
+                    seatingPlanInScreenRoom[i][j] = seat;
+//                    System.out.print("Seating\n");            //check values in Terminal
+                }
+            }
+        }
+
+        seatingPlanInScreenRoom[selectedRow][selectedSeat]='B';
+//            System.out.print("Seating Plan In Screen Room called\n");
+        //printing starts below
+        System.out.print("Cinema:\n");
+        for (int i = 0; i < numberOfRowsNew; i++) {
+            for (int j = 0; j < numberOfSeatsInRowNew; j++) {
+                System.out.printf(" %c", seatingPlanInScreenRoom[i][j]);
+            }
+            System.out.println();
+        }
+
+    }
+    
+    public static void main(String[] args) {
+            Cinema cinema = new Cinema();
+            cinema.generateSeatingPlanInScreenRoom();
+            cinema.getBooking();
+            cinema.generateBookedSeatInScreenRoom();
+            cinema.generateBookedSeatingPlanInScreenRoom();
+            // cinema.cinemaLayout();
+
+        }
+}

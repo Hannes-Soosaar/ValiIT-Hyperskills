@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Main shape = new Main();
+        shape.determineShape();
+
+
+    }
+
+    public void determineShape(){
+        Scanner scanner = new Scanner(System.in);
+        int getNumber= scanner.nextInt();
+        String one="Yes!",two="No!",three="No!",four="No!";
+        switch(getNumber){
+
+            case 1:
+                System.out.print(one);
+                break;
+
+            case 2:
+                System.out.print(two);
+
+                break;
+
+            case 3:
+                System.out.print(three);
+
+                break;
+
+            case 4:
+                System.out.print(four);
+
+                break;
+
+            default:
+                System.out.print("Unknown number");
+
+                break;
+
+        }
+
+
+
+    }
+}

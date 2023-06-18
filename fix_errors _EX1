@@ -1,0 +1,17 @@
+//fix errors  EX1
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {      	// vo1d to void
+        Scanner scanner = new Scanner(System.in);
+
+        String a = scanner.next(); 
+        String b = scanner.next();    			// Int to String 
+        String c = scanner.next();			
+
+        String result = a + b + c;			// switched d to c and  "-" to "+"
+
+        System.out.println(result);
+    }
+}

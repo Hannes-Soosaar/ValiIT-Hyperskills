@@ -1,0 +1,175 @@
+package cinema;
+import java.util.Scanner;
+/*
+Create runtime loop        -NOK
+Establish Exit routine     -NOK
+Add menu using Switch case -NOK
+Create array that gets passed to  getBooking.
+
+ */
+
+
+
+
+public class Cinema {
+    public int numberOfRowsNew, numberOfSeatsInRowNew, revenue, seatsTotal, discountSeats = 0, regularSeats = 0, userSelection, counter = 0;
+    public int selectedRow = 0, selectedSeat = 0;
+    private char[][] seatingPlanInScreenRoom;
+
+    public int ticketPrice2 = 8;
+    public int ticketPrice1 = 10;
+    public int seatPrice;
+    Scanner scanner = new Scanner(System.in);
+    public boolean running = true;
+
+    public void getRows() {
+        System.out.print("Enter the number of rows:\n");
+        numberOfRowsNew = scanner.nextInt();
+        numberOfRowsNew = numberOfRowsNew + 1;              //adds one for the index
+
+    }
+
+    public void getNumberOfSeats() {
+        System.out.print("Enter the number of seats in each row:\n");
+        numberOfSeatsInRowNew = scanner.nextInt();
+        numberOfSeatsInRowNew = numberOfSeatsInRowNew + 1;   // adds one for the index
+
+    }
+
+
+    public void loopMain() {
+        getRows();
+        getNumberOfSeats();
+        seatingPlanInScreenRoom = new char[numberOfRowsNew][numberOfSeatsInRowNew];
+
+        while (running) {
+            selectMenu();
+        }
+
+    }
+
+    public void selectMenu() {
+
+        System.out.print("""
+                1. Show the seats
+                2. Buy a ticket
+                0. Exit\n
+                 """);
+        userSelection = scanner.nextInt();
+
+        if (userSelection==0){
+            userSelection=3;
+        }
+        if (userSelection < 0 || userSelection > 3) {
+            System.out.print("Invalid choice, please select a valid option");
+            selectMenu();
+        }
+
+        switch (userSelection) {
+
+            case 1:
+                generateBookedSeatingPlanInScreenRoom(selectedRow, selectedSeat);
+                break;
+            case 2:
+                getBooking();
+
+                break;
+            case 3:
+                exitMenu();
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+
+    public void getBooking() {
+        System.out.print("\nEnter a row number:\n");
+        selectedRow = scanner.nextInt();
+        System.out.print("Enter a seat number in that row:\n");
+        selectedSeat = scanner.nextInt();
+          if(counter>0){
+              generateBookedSeatInScreenRoom(selectedRow);
+          }
+    }
+
+    public void generateBookedSeatInScreenRoom(int selectedRow) {
+        int seatPrice, discountedRows;
+        boolean discountApplicable = false;                     //used to determine if the seat is in a discount row
+        discountedRows = ((numberOfRowsNew) / 2);      //
+        seatsTotal = (numberOfSeatsInRowNew - 1) * (numberOfRowsNew - 1);           // THIS PART KILLED ME FOR 1H!!
+        if (seatsTotal > 60) {
+            regularSeats = (numberOfRowsNew / 2) * numberOfSeatsInRowNew;
+            discountSeats = (seatsTotal - regularSeats);
+            revenue = ((regularSeats * ticketPrice1) + (discountSeats * ticketPrice2));
+            discountApplicable = true;
+        } else if (seatsTotal <= 60) {                                                 // works
+            revenue = seatsTotal * ticketPrice1;
+            discountApplicable = false;
+        }
+
+
+            if (selectedRow >= discountedRows && discountApplicable ) {
+                seatPrice = ticketPrice2;
+                System.out.printf("Ticket price: $%d%n\n", seatPrice);
+
+            } else {
+                seatPrice = ticketPrice1;
+                System.out.printf("Ticket price: $%d%n\n", seatPrice);
+            }
+
+        }
+
+
+    public void generateBookedSeatingPlanInScreenRoom(int selectedRow, int selectedSeat) {
+
+        for (int i = 0; i < numberOfRowsNew; i++) {
+            for (int j = 0; j < numberOfSeatsInRowNew; j++) {
+                if (i == 0 && j == 0) {
+                    seatingPlanInScreenRoom[i][j] = ' ';
+                } else if (i == 0) {
+                    seatingPlanInScreenRoom[i][j] = (char) ((j + '0'));
+
+                } else if (j == 0) {
+                    seatingPlanInScreenRoom[i][j] = (char) (i + '0');
+
+                } else if (counter == 0) {
+                    seatingPlanInScreenRoom[i][j] = 'S';
+                }
+
+            }
+        }
+
+
+            if (selectedRow != 0 && selectedSeat != 0) {
+                seatingPlanInScreenRoom[selectedRow][selectedSeat] = 'B';
+            }
+
+
+            System.out.print("Cinema:\n");
+            for (int i = 0; i < numberOfRowsNew; i++) {
+                for (int j = 0; j < numberOfSeatsInRowNew; j++) {
+                    System.out.printf(" %c", seatingPlanInScreenRoom[i][j]);
+                }
+                System.out.println();
+            }
+        if(counter>0) {
+            generateBookedSeatInScreenRoom(selectedRow);
+        }
+            counter++;
+        }
+
+    public int exitMenu(){
+            return 0;
+        }
+
+
+    public static void main(String[] args) {
+            Cinema cinema = new Cinema();
+            cinema.loopMain();
+
+
+        }
+}

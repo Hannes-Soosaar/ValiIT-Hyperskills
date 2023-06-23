@@ -1,0 +1,34 @@
+package tictactoe;
+import java.util.Random;
+
+public class Main{
+    char [][] boardGraphics =new char[3][3];
+    public Random random =new Random();
+
+
+    public void populateBoard(){
+        for(int i=0;i<=2;i++){
+            for(int j=0;j<=2;j++){
+                boolean randomValue=random.nextBoolean();
+                char xOrO=randomValue?'X':'O';
+                boardGraphics[i][j]=xOrO;
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public void printBoard(){
+        for(int i=0;i<2;i++){
+            for(int j=0;j<2;j++){
+                System.out.print(boardGraphics[i][j]);
+            }
+            System.out.print("\n");
+        }
+    }
+
+    public static void main(String[] args) {
+        Main game=new Main();
+        game.populateBoard();
+        game.printBoard();
+    }
+}

@@ -1,0 +1,302 @@
+package tictactoe;
+import java.util.Random;
+import java.util.Scanner;
+
+/*
+Check input         -OK
+
+For the win cases the index values need to be shifted 1 to the left or -1 
+
+Wins case 1
+if the following cases contain all X's  -OK			
+    |-159   /diagonal1
+    |-753   /diagonal2
+    |-147   /column1
+    |-258   /column2
+    |-369   /column3
+    |-123   /row1
+    |-456   /row2
+    |-789   /row3
+    |-Assign gameWonX
+
+Wins case 2
+if the following cases contain all O's      -OK
+    |-159   /diagonal1
+    |-753   /diagonal2
+    |-147   /column1
+    |-258   /column2
+    |-369   /column3
+    |-123   /row1
+    |-456   /row2
+    |-789   /row3
+    |-Assign gameWonO
+
+Draw case 3                     -OK
+    |-Check if more moves    --OK
+    |-Check if game won      -- OK      /case 1 or case 2
+    |-Assign case 3          -- OK
+
+Game not finished case 4        -OK
+    |-input has spaces
+    |-!gameWon
+
+Impossible case 5           ---OK
+    |-Check if too many X OR O's        -OK
+    |-if gameWonX and gameWonO
+
+
+ */
+
+public class Main{
+
+    public final int GAME_WON_X=1,GAME_WON_O=2,DRAW=3,GAME_NOT_FINISHED=4,IMPOSSIBLE=5;			/// the string is alligned and moved to multiple lines for eas of reading.
+    public final String XWINS=  "XOO" +
+                                "XXO" +
+                                "OOX",
+            OWINS=  "XOX" +
+                    "XOO" +
+                    "OOX",
+            DRAW_CASE="XOO" +
+                      "OXO" +
+                      "XXO",
+            GAME_NOT_FINISHES_CASE=
+                            "XXO" +
+                            "__X" +
+                            "OX_",
+            IMPOSSIBLE_CASE="XO_" +
+                            "XO_" +
+                            "XOX";
+    public int caseNumber=0;
+    public char[][] boardGraphics = new char[3][5];
+    public char[] separatedInput = new char[9];
+    public Random random = new Random();
+    public Scanner scanner = new Scanner(System.in);
+    public String inputFromConsole="";
+    public boolean noMoreMoves=false,gameWon=false, gameWonX=false, gameWonO=false;
+
+
+    public void generateInput(){                            // Section created to debug possible logic errors
+        System.out.printf("SelectScenario%n" +
+                "Xwins: %s%n"+
+                "Owins: %s%n"+
+                "Draw:  %s%n"+
+                "Game in progress: %s%n"+
+        "Impossible: %s%n",XWINS,OWINS,DRAW_CASE,GAME_NOT_FINISHES_CASE,IMPOSSIBLE_CASE);
+        int sellectinput=scanner.nextInt();
+        switch (sellectinput){
+            case 1:
+                inputFromConsole=XWINS;
+                break;
+            case 2:
+                inputFromConsole=OWINS;
+                break;
+            case 3:
+                inputFromConsole=DRAW_CASE;
+                break;
+            case 4:
+                inputFromConsole=GAME_NOT_FINISHES_CASE;
+                break;
+            case 5:
+                inputFromConsole=IMPOSSIBLE_CASE;
+                break;
+            default:
+                break;
+            }
+
+
+    }
+
+    public void  getSequence(){                                         
+//            generateInput();						// if uncommented can be used to test out different moves
+           inputFromConsole = scanner.nextLine();			// if commented out will disable the manual input from the consol.	
+
+    }       // Able for check
+
+    public void decomposeSequence(){
+    separatedInput= inputFromConsole.toCharArray();
+    }
+
+    public void checkEnoughInput(){
+        int numberOfX=0,numberOfO=0,numberOf_=0,deltaXO=0;
+        for(int i=0;i<9;i++){
+            if(separatedInput[i]=='X'){
+                numberOfX++;
+            }else if(separatedInput[i]=='O'){
+                numberOfO++;
+            }else if(separatedInput[i]== '_' || separatedInput[i]== ' '){
+                numberOf_++;
+            }else{
+                System.out.print("Input has not recognized characters");
+            }
+        }
+        deltaXO=numberOfX-numberOfO;
+
+        if(deltaXO>1 ||deltaXO<-1){             // if there is more than 1 more of either X or O
+        caseNumber=IMPOSSIBLE;                           // Somebody is trying to cheat
+        }else if (numberOf_==0){
+            noMoreMoves=true;                   // Sees if there are any more moves left
+        }
+
+    }
+
+    public void checkGameWon() {
+        //Check to see if X won.
+        if (separatedInput[0] == separatedInput[1] && separatedInput[1] == separatedInput[2] && separatedInput[0] != '_' && separatedInput[0] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[6] == separatedInput[4] && separatedInput[4] == separatedInput[2] && separatedInput[6] != '_' && separatedInput[6] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[0] == separatedInput[3] && separatedInput[3] == separatedInput[6] && separatedInput[0] != '_' && separatedInput[0] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[1] == separatedInput[4] && separatedInput[4] == separatedInput[7] && separatedInput[1] != '_' && separatedInput[1] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[2] == separatedInput[5] && separatedInput[5] == separatedInput[8] && separatedInput[2] != '_' && separatedInput[3] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[0] == separatedInput[1] && separatedInput[1] == separatedInput[2] && separatedInput[0] != '_' && separatedInput[0] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[3] == separatedInput[4] && separatedInput[4] == separatedInput[5] && separatedInput[3] != '_' && separatedInput[4] == 'X') {
+            gameWonX = true;
+        } else if (separatedInput[6] == separatedInput[7] && separatedInput[7] == separatedInput[8] && separatedInput[6] != '_' && separatedInput[6] == 'X') {
+            gameWonX = true;
+        } else {
+
+            gameWonX = false;
+        }
+        if (separatedInput[0] == separatedInput[1] && separatedInput[1] == separatedInput[2] && separatedInput[0] != '_' && separatedInput[0] == 'O') {
+                gameWonO = true;
+            } else if (separatedInput[6] == separatedInput[4] && separatedInput[4] == separatedInput[2] && separatedInput[6] != '_' && separatedInput[6] == 'O') {
+                gameWonO = true;
+            } else if (separatedInput[0] == separatedInput[3] && separatedInput[3] == separatedInput[6] && separatedInput[0] != '_' && separatedInput[0] == 'O') {
+                gameWonO = true;
+            } else if ((separatedInput[1] == separatedInput[4]) && (separatedInput[4] == separatedInput[7]) && (separatedInput[1] != '_') && (separatedInput[1] == 'O')) {
+                gameWonO = true;
+            } else if (separatedInput[2] == separatedInput[5] && (separatedInput[5] == separatedInput[8])&& (separatedInput[2] != '_') && (separatedInput[2] == 'O')) {
+                gameWonO = true;
+            } else if (separatedInput[0] == separatedInput[1] && separatedInput[1] == separatedInput[2] && separatedInput[0] != '_' && separatedInput[0] == 'O') {
+                gameWonO = true;
+            } else if (separatedInput[3] == separatedInput[4] && separatedInput[4] == separatedInput[5] && separatedInput[3] != '_' && separatedInput[3] == 'O') {
+                gameWonO = true;
+            } else if (separatedInput[6] == separatedInput[7] && separatedInput[7] == separatedInput[8] && separatedInput[6] != '_' && separatedInput[6] == 'O') {
+                gameWonO = true;
+            } else {
+                gameWonO = false;
+            }
+
+        if (gameWonO&&gameWonX) {
+                gameWon = false;
+                caseNumber = IMPOSSIBLE;
+            } else if (gameWonX) {
+                gameWon = true;
+                caseNumber = GAME_WON_X;
+            } else if (gameWonO) {
+                gameWon=true;
+                caseNumber = GAME_WON_O;
+            }else{}
+
+        }
+
+    public void checkDraw(){
+        if(!gameWon && noMoreMoves){
+            caseNumber=DRAW;
+        }
+    }
+    public void checkInProgress(){
+
+        if(!gameWon && caseNumber !=DRAW && caseNumber!=IMPOSSIBLE){
+            caseNumber=GAME_NOT_FINISHED;
+        }
+
+    }
+
+
+    public void analyzeInput(){
+            checkEnoughInput();
+            checkGameWon();
+            checkDraw();
+            checkInProgress();
+
+    }
+
+    public void outputGameStatus(){
+
+
+        switch (caseNumber){
+            case 1:
+                System.out.print("X wins\n");
+                break;
+
+            case 2:
+                System.out.print("O wins \n");
+                break;
+
+            case 3:
+                System.out.print("Draw\n");
+                break;
+
+            case 4:
+                System.out.print("Game not finished\n");
+                break;
+
+            case 5:
+                System.out.print("Impossible\n");
+                break;
+
+            default:
+                break;
+
+        }
+
+    }
+
+
+
+    public void populateBoard() {
+
+        int counter=0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <= 4; j++) {
+            //    boolean randomValue = random.nextBoolean();           //nolonger needed
+            //    char xOrO = randomValue ? 'X' : 'O';                  //nolonger needed
+                if (j == 0) {
+                    boardGraphics[i][j] = '|';
+                } else if (j == 4) {
+                    boardGraphics[i][j] = '|';
+                } else {
+                    boardGraphics[i][j] = separatedInput[counter];
+                    counter++;
+                }
+
+            }
+            System.out.print("\n");
+        }
+    }
+
+
+    public void printBoard() {
+
+        System.out.print("---------\n");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <= 4; j++) {
+
+                if (j == 0) {
+                    System.out.print(boardGraphics[i][j]);
+
+                } else {
+                    System.out.print(" " + boardGraphics[i][j]);
+                }
+
+            }
+            System.out.print("\n");
+        }
+        System.out.print("---------\n");
+    }
+    public static void main(String[] args) {
+        Main game=new Main();
+        game.getSequence();
+        game.decomposeSequence();
+        game.populateBoard();
+        game.printBoard();
+        game.analyzeInput();
+        game.outputGameStatus();
+    }
+
+}

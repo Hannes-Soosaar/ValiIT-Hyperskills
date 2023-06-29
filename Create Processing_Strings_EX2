@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+class Main {
+
+Scanner scanner =new Scanner(System.in);
+    String inputText;
+    public void getInput() {
+        inputText = scanner.nextLine();
+    }
+
+    public int getInputLength(){
+        int textLength;
+        textLength=inputText.length();
+        return textLength;
+    }
+
+    public void multiplyInput(){
+        int textLength = getInputLength();
+
+        char[] doubleTheInput =new char[textLength*2];
+        char firstLetter=inputText.charAt(0);
+        int counter=0;
+
+        for(int i=0; i<textLength;i++){
+            char transferVar=inputText.charAt(i);
+            for(int j=0;j<2;j++){
+            doubleTheInput[counter]=inputText.charAt(i);
+            counter++;
+            }
+        }
+        System.out.print(doubleTheInput);
+
+    }
+
+    public static void main(String[] args) {
+        Main duplicator = new Main();
+        duplicator.getInput();
+        duplicator.multiplyInput();
+    }
+}

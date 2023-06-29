@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+/*
+using
+myString.length()
+myString.charAt()
+ */
+
+
+class Sequencer {
+
+    Scanner scanner = new Scanner(System.in);
+    public String dnaSequence = "CCCAAABBBEEEFFFFFFFFAAADDD",usedLetters;
+    public String[] sequence =new String[dnaSequence.length()];// Stores the initial string
+//    public String[] uniqeEntries= new String
+    public char newLettersInSequence[] =new char[dnaSequence.length()];       // Stores different character from input
+
+    private void getDnaSequence() {
+        dnaSequence = scanner.nextLine();
+    }
+// Nice attempt but overly complicated and NOT NEEDED
+//    public void countUniqueCharacter() {
+//        int counter = 0;
+//        for (int i = 0; i < dnaSequence.length(); i++) {                                    //iterate through the string provided
+//            if (i == 0) {
+//                newLettersInSequence[counter] = dnaSequence.charAt(i);                          //Adds the first position
+//                ++counter;
+//                newLettersInSequence[counter] = ' ';                                            //creates a space to be used as a delimiter
+//            } else if (dnaSequence.charAt(i) != dnaSequence.charAt(i - 1)) {
+//                newLettersInSequence[counter] = dnaSequence.charAt(i);                          // creates a new character in the char Array if different from last
+//                ++counter;
+//                newLettersInSequence[counter] = ' ';                                            // creates a space to be used as a delimiter
+//            } else {
+//            }
+//            char letterAtIteration = dnaSequence.charAt(i);
+//            System.out.printf("The index is: %d%n  There are  %d%n", i, counter);
+//        }
+//        for (int j = 0; j < dnaSequence.length(); j++) {
+//            System.out.printf("the content of the newLetterInSequence: %c%n", newLettersInSequence[j]);
+//
+//        }           // created to check if all values and how are stored
+//    }
+
+// NOT NEEDED!
+//    public void optimizeNewLettersInSequence(){
+//    String newStringFromCharArray = new String(newLettersInSequence);
+//    String [] tempArrayToStoreSpilt= newStringFromCharArray.split(" ");
+//    usedLetters=tempArrayToStoreSpilt[0];
+//    System.out.println(usedLetters);                    // temporary to check
+//    }
+
+        public void countUniqueInARow() {
+
+            int countOfUnique = 1;                                        //sets the count to one as we start counting from 1
+            char currentChar=dnaSequence.charAt(0);                     // sets the char that is checked against
+
+            for (int i = 1; i < dnaSequence.length(); i++) {            // Iterates through the dns Sequence
+
+                if (dnaSequence.charAt(i) == currentChar) {
+                        countOfUnique++;
+                    } else{
+                        System.out.printf("%c%d",currentChar,countOfUnique);
+                        currentChar=dnaSequence.charAt(i);
+                        countOfUnique=1;                                // re initilailzes the char we are checking against
+                    }
+            }
+            System.out.printf("%c%d",currentChar, countOfUnique);    //
+        }
+
+    public static void main (String[]args){
+        Sequencer sequencer = new Sequencer();
+        sequencer.getDnaSequence();
+        sequencer.countUniqueInARow();
+            }
+
+}
+

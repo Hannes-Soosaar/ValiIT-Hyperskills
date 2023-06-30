@@ -1,0 +1,64 @@
+package rockpaperscissors;
+import java.util.Scanner;
+
+public class Main {
+    boolean running=true;
+    final String PAPER="paper", ROCK="rock", SCISSORS="scissors";
+    final int PLAYED_PAPER=1, PLAYED_ROCK=2,PLAYED_SCISSORS=3;
+    public int playerThrew=0;
+    Scanner scanner = new Scanner(System.in);
+
+    public void getPlayerMove() {
+
+             String playerMove = scanner.next();
+
+        if (playerMove.equalsIgnoreCase(PAPER)) {
+            playerThrew=PLAYED_PAPER;
+        } else if (playerMove.equalsIgnoreCase(ROCK)) {
+            playerThrew=PLAYED_ROCK;
+        } else if (playerMove.equalsIgnoreCase(SCISSORS)) {
+            playerThrew=PLAYED_SCISSORS;
+        }
+    
+    }
+
+    public void evaluateWin() {                                                     // for this EX it does not make sense to split
+
+        switch(playerThrew){
+            case 1:
+                System.out.print ("Sorry, but the computer chose scissors");
+                running = false;
+                return;
+            case 2:
+                System.out.print ("Sorry, but the computer chose paper");
+                running = false;
+                return;
+            case 3:
+                System.out.print ("Sorry, but the computer chose rock");
+                running = false;
+                return;
+            case 0:
+                System.out.print ("Player has not yet moved");
+                return;
+            default:
+                return;
+        }
+
+    }
+
+    public void displayResult(){                                                    // Print statements will be moved here later
+    // read for when more complexity gets added.
+
+    }
+
+    public static void main(String[] args) {
+        Main game= new Main();// write your code here
+        while(game.running) {
+            game.getPlayerMove();
+            game.evaluateWin();
+//            game.displayResult();
+        }
+
+
+    }
+}

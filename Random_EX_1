@@ -1,0 +1,67 @@
+
+import java.util.*;
+import java.util.Scanner;
+import java.util.Random;
+/*
+1. Get the input for K, N and M.
+    a. K is the start from where we need to start generating seeds.
+    b. N is the number of random gaussian numbers to be generated.
+    c. M is the upper limit of the random number that has been generated
+
+2.Generate a random number that takes a seed K
+3.Generate random gaussian numbers N times.
+4.Check if each random number generated using the gaussian distribution method with a seed K
+  that has been generated is smaller or equal to M
+
+added break; to the for loop instead of i=N; after completing the Ex.
+
+ */
+
+
+public class Main {
+
+    public long K = 0;
+    public int N = 0;
+    public double M = 0;
+    public double generatedRandomNumber=0;
+    public boolean simulationRunning=true;
+    public boolean matchFound=false;
+public void getUserInput() {
+    Scanner scanner = new Scanner(System.in);
+    K = scanner.nextLong();
+    N = scanner.nextInt();
+    M = scanner.nextDouble();
+    scanner.close();
+}
+public void generateRandomNumbersBasedOnGaussianDistribution() {
+    
+    int counter = 0;
+
+    while(!matchFound) {
+        Random random = new Random(K);
+        generatedRandomNumber = random.nextGaussian();
+
+        for (int i = 0; i < N; i++) {
+            if (generatedRandomNumber <= M && counter<N) {
+                generatedRandomNumber = random.nextGaussian();
+                counter++;
+            } else if (generatedRandomNumber > M) {
+                K++;
+                counter = 0;
+                break;
+            } else {
+                matchFound = true;
+                System.out.print(K);
+                break;
+            }
+        }
+    }
+}
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Main main = new Main();
+        main.getUserInput();
+        main.generateRandomNumbersBasedOnGaussianDistribution();
+    }
+}

@@ -1,0 +1,100 @@
+package rockpaperscissors;
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main {
+
+    boolean running = true;
+    final String PAPER = "paper", ROCK = "rock", SCISSORS = "scissors";   
+    final int PLAYED_PAPER = 1, PLAYED_ROCK = 2, PLAYED_SCISSORS = 3;
+    final int DRAW = 3, PLAYER_WINS = 1, COMPUTER_WINS = 2;
+    public int playerThrew = 0, computerThrew = 0, winScenario = 0;
+    public String winningSign = " ";
+    Scanner scanner = new Scanner(System.in);
+
+    public void getPlayerMove() {
+
+        String playerMove = scanner.next();
+
+        if (playerMove.equalsIgnoreCase(PAPER)) {
+            playerThrew = PLAYED_PAPER;
+        } else if (playerMove.equalsIgnoreCase(ROCK)) {
+            playerThrew = PLAYED_ROCK;
+        } else if (playerMove.equalsIgnoreCase(SCISSORS)) {
+            playerThrew = PLAYED_SCISSORS;
+        }
+
+        scanner.close();
+
+    }
+
+    public void getComputerMove() {
+
+        Random generateComputerMove = new Random();
+
+        computerThrew = generateComputerMove.nextInt(3) + 1;
+
+        if (computerThrew == 3) {
+            winningSign = SCISSORS;
+            computerThrew = PLAYED_SCISSORS;             //redundant but adds to the readability of the code
+        } else if (computerThrew == 2) {
+            winningSign = ROCK;
+            computerThrew = PLAYED_ROCK;
+        } else if (computerThrew == 1) {
+            winningSign = PAPER;
+            computerThrew = PLAYED_PAPER;
+        } else {
+            System.out.print("The computer chose an invalid sign");
+        }
+    }
+
+    public void evaluateWin () {                                                  
+
+        if (playerThrew == computerThrew) {
+            winScenario = DRAW;
+        } else if (playerThrew == PLAYED_PAPER && computerThrew == PLAYED_ROCK) {
+            winScenario = PLAYER_WINS;
+        } else if (playerThrew == PLAYED_SCISSORS && computerThrew == PLAYED_PAPER) {
+            winScenario = PLAYER_WINS;
+        } else if (playerThrew == PLAYED_ROCK && computerThrew == PLAYED_SCISSORS) {
+            winScenario = PLAYER_WINS;
+        } else {
+            winScenario = COMPUTER_WINS;
+        }
+    }
+
+    public void displayResult () {        
+
+        switch (winScenario) {
+            case DRAW:
+                System.out.printf("There is a draw (%s)", winningSign);
+                running = false;
+                    return;
+            case PLAYER_WINS:
+                System.out.printf("Well done. The computer chose %s and failed", winningSign);
+                running = false;
+                    return;
+            case COMPUTER_WINS:
+                System.out.printf("Sorry, but the computer chose %s", winningSign);
+                running = false;
+                    return;
+                case 0:
+                    System.out.print("Player has not yet moved");
+                    return;
+                default:
+                    return;
+            }
+        }
+
+public static void main (String[]args){
+    Main game = new Main();
+
+        while (game.running) {
+             game.getPlayerMove();
+             game.getComputerMove();
+             game.evaluateWin();
+             game.displayResult();
+        }
+    }
+}
+

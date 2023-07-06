@@ -1,0 +1,104 @@
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.File;
+
+public class Main {
+    protected String getFilePath() {
+
+        String filePath="\\Java_Test\\dataset_91022.txt";   // Change the file path from here to analyze a new file
+        return filePath;
+
+    }
+    protected int readInFileLength() {
+        String filePath=getFilePath();
+        File inpuFile=new File(filePath);
+        int counter=0;
+
+        try{
+           Scanner scanner = new Scanner(inpuFile);
+           while(scanner.hasNextInt()) {
+               scanner.nextInt();
+               counter++;
+           }
+           //         System.out.print("There are "+counter+" elements");           // to check the output of this method1
+            scanner.close();
+        } catch(FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return counter;
+    }
+
+    protected int[] createDataArray() {
+        // Initialize the fields
+        int arraySize=readInFileLength();
+        String filePath=getFilePath();
+        int[] storedNumbers = new int[arraySize];
+        // get input from the
+        File inpuFile = new File(filePath);
+
+        try {
+            Scanner copyToArray = new Scanner(inpuFile);
+            for (int i = 0; i < arraySize; i++) {
+                storedNumbers[i] = copyToArray.nextInt();
+//              System.out.print(storedNumbers[i] + " ");         // just to check the output at this stage
+            }
+            copyToArray.close();
+
+        }catch(FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return storedNumbers;
+    }
+
+    protected int findTheLargerInteger() {
+        int countOfSmallerThan =0;
+        int arraySize = readInFileLength();
+        int[] arrayToAnalyze = createDataArray();
+        int largestInteger=arrayToAnalyze[0];
+        for (int i = 1; i < arraySize; i++) {
+
+            if(arrayToAnalyze[i] > largestInteger) {
+
+                largestInteger = arrayToAnalyze[i];
+
+            }
+
+            if(arrayToAnalyze[0] < 9999){               // There is an anomaly that I can not figure out if we use >= it will not work
+                countOfSmallerThan++;
+            }
+
+
+            if(arrayToAnalyze[i] < 9999){              // There is an anomaly that I can not figure out if we use >= it will not work
+                countOfSmallerThan++;
+            }
+
+
+        }
+        int largerThan = arraySize-countOfSmallerThan;
+        System.out.print("the larger number in the file is" + largestInteger + "\n");
+        System.out.print("there are "+ largerThan + " numbers larger than 9999\n");
+        return largestInteger;
+
+
+    }
+
+//    public void displayProjectPath(){
+//        String myProjectPath=System.getProperty("user.dir");
+//        System.out.println("Project path: "+  myProjectPath);
+//        System.out.println(getFilePath());
+//    }
+
+    public static void main(String[] args) {
+        Main main =new Main();
+//        main.displayProjectPath();        // to double check the project path if you are unsure
+        main.readInFileLength();
+ //       System.out.println("file length gotten! \n");
+        //main.createDataArray();
+//        System.out.println("Array created \n");
+        //  main.findTheLargerInteger();
+    int largestInt= main.findTheLargerInteger();
+  //      System.out.print(largestInt);
+    }
+
+}

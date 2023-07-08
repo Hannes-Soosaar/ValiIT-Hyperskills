@@ -1,0 +1,338 @@
+package rockpaperscissors;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Random;
+import java.io.File;
+/*
+-
+-   Output a line Enter your name: . Users enter their names on the same line (not the one following the output); -OK
+-   Read the input with the username and output Hello, <name>;   - OK
+-   Read rating.txt and check whether it contains an entry with the current username.
+        If yes, use the score specified in the file as a starting point. If not, start
+        the score from 0;       - OK
+-   Read the input with the list of options for the game (options are separated by comma).
+        If the input is an empty line, play with the default options;       -OK
+-   Output a line Okay, let's start;        -OK
+-   If the input is !exit, output Bye! and stop the game;       -NOK
+-   If input corresponds to anything else, output Invalid input;          -OK
+
+// Valid only for new game mode
+
+-   If the input is the name of the option, then pick a random option and output a line with the result of the
+        game in the following format (<option> is the name of the option chosen by the program): - NOK
+    Loss: Sorry, but the computer chose <option>
+    Draw: There is a draw (<option>)
+    Win: Well done. The computer chose <option> and failed
+-   For each draw, add 50 points to the score. For each user's win, add 100 to their score.
+        In case of a loss, don't change the score;     -NOK
+-   Restart the game (with the same options defined before the start of the game).
+
+- Select game mode- if no input select regular logic , if input select use the advancedGame logic.
+-
+ */
+
+public class Main {
+    boolean running = true;
+    boolean extendedGame = false;
+    boolean initialRun=true;
+    final String PAPER = "paper", ROCK = "rock", SCISSORS = "scissors", EXIT = "!exit", RATING = "!rating";
+    final int PLAYED_PAPER = 1, PLAYED_ROCK = 2, PLAYED_SCISSORS = 3, PLAYED_EXIT = 4,PLAYED_DISPLAY_RATING = 5;
+    final int DRAW = 3, PLAYER_WINS = 1, COMPUTER_WINS = 2, DISPLAY_RATING = 5, DISPLAY_EXIT = 4;
+    public int playerThrew, computerThrew = 0, winScenario = 0;
+    final String RATING_FILE_PATH=".\\rating.txt";
+    public String computerChosenSignString = " ";
+    public String playerThrewExtended="0";
+
+    public String player;
+    public int playerScore;
+
+    public void displayProjectPath(){
+        String myProjectPath=System.getProperty("user.dir");
+        System.out.println("Project path: "+  myProjectPath);
+
+    }           // used to debug file name issues
+
+    public String createPlayer() {
+        Scanner scanner= new Scanner(System.in);
+        System.out.print("Enter your name: ");
+        String player = scanner.nextLine();
+        System.out.printf("Hello, %s%n",player);
+        return player;
+    }
+    public String [] getExtendedGameDeck() {
+        Scanner scanner= new Scanner(System.in);
+        String[] components = scanner.nextLine().split(",");
+        if (components[0].equalsIgnoreCase("")) {
+            extendedGame = false;
+        }else{
+            extendedGame = true;
+        }
+//        for (int i = 0;i<= components.length;i++ ) {
+//            extendedGame=true;
+//        }
+        return components;
+    }
+    public boolean checkInputFile(File ratingFile) {     // ended up not  using this method
+
+        boolean fileOK = true;
+
+        if(!ratingFile.exists()) {
+            System.out.print("the input file does not exist! \n");
+                fileOK = false;
+        }else if(!ratingFile.canRead()) {
+                fileOK = false;
+            System.out.print("the input file cannot be read! \n");
+                fileOK = false;
+        }else if(!ratingFile.isFile()) {
+            fileOK = false;
+            System.out.print("the input is not a file! \n");
+        } else {
+            fileOK=true;
+        }
+            System.out.print(fileOK);
+            return fileOK;
+    }
+    public void importExternalRating(){
+        File ratingFile = new File (RATING_FILE_PATH);
+//            System.out.println("Rating file path: " + ratingFile.getAbsolutePath());          // used to trouble shoot
+        Scanner readInFile;
+        String  readLine;
+
+        player = createPlayer();
+
+        try{
+
+            readInFile = new Scanner(ratingFile);
+
+            while(readInFile.hasNextLine()) {
+
+                readLine = readInFile.nextLine();
+
+                String[] components = readLine.split(" ");          // I have not created an
+
+                if(components[0].equalsIgnoreCase(player)) {                 // should set to throw an exception?
+
+                    playerScore=Integer.parseInt(components[1]);
+
+                }
+
+            }
+
+            readInFile.close();
+
+        }catch (FileNotFoundException e) {
+
+            throw new RuntimeException();
+
+        }
+
+    }
+    public void getPlayerMove() {
+
+        if(initialRun){
+            System.out.print("Okay, let's start \n");
+        }
+
+        Scanner getMove = new Scanner(System.in);
+        String playerMove = getMove.next();                 // can not close the playerMove scanner, reason not known for now
+
+        if (playerMove.equalsIgnoreCase(PAPER)) {
+            playerThrew = PLAYED_PAPER;
+        } else if (playerMove.equalsIgnoreCase(ROCK)) {
+            playerThrew = PLAYED_ROCK;
+        } else if (playerMove.equalsIgnoreCase(SCISSORS)) {
+            playerThrew = PLAYED_SCISSORS;
+        } else if (playerMove.equalsIgnoreCase(EXIT)) {
+            running = false;
+            playerThrew = PLAYED_EXIT;
+        }else if (playerMove.equalsIgnoreCase(RATING)) {
+            playerThrew = PLAYED_DISPLAY_RATING;
+        } else {
+            System.out.print("Invalid input\n");
+            getPlayerMove();
+        }
+        initialRun=false;
+    }
+
+    public void extendedPlayerMove() {
+
+        if(initialRun){
+            System.out.print("Okay, let's start \n");
+        }
+
+        Scanner getMove = new Scanner(System.in);
+        String playerMove = getMove.next();                 // can not close the playerMove scanner, reason not known for now
+
+        String[] playableOptions=getExtendedGameDeck();
+        int deckSize=playableOptions.length;
+        int checkValue=0;
+
+     if (playerMove.equalsIgnoreCase(EXIT)) {
+        running = false;
+        playerThrew = PLAYED_EXIT;
+    }
+     if (playerMove.equalsIgnoreCase(RATING)) {
+        playerThrew = PLAYED_DISPLAY_RATING;
+    }
+
+
+        for(int i = 0; i < deckSize; i++) {
+            if (playerMove.equalsIgnoreCase(playableOptions[i])) {
+                playerThrewExtended = playableOptions[i];
+                playerThrew=i;
+
+            } else {
+                checkValue++;
+            }
+        }
+
+        if(checkValue == deckSize && playerThrewExtended == "0") {
+            System.out.print("Invalid input\n");
+            extendedPlayerMove();
+        }
+            initialRun = false;
+
+
+    }
+
+    public void extendedComputerMove() {
+
+        Random generateComputerMove = new Random();
+        String[] playableOptions = getExtendedGameDeck();
+        int deckSize = playableOptions.length;
+        computerThrew = generateComputerMove.nextInt(deckSize) + 1;
+        computerChosenSignString=playableOptions[computerThrew];
+
+        }
+
+    public void extendedEvaluateWin() {
+
+        String[] playableOptions = getExtendedGameDeck();
+        int deckSize = playableOptions.length;
+        String[] winLineUp = new String[deckSize];           // we aim to  move the selected element to the first pos.
+        String valueBuffer = playableOptions[0];            //Stores the first element to be placed at the last pos.
+        int tempIntForWinEval = 0;                          // can be 0 as this will be the first condition we check for
+        for (int i = 0; i < deckSize; i++) {
+            winLineUp[i] = playableOptions[(i + playerThrew) % deckSize]; //modulus allows a loop eg  10%10 = 0  11%10 = 1
+        }
+        winLineUp[deckSize] = valueBuffer;            // Sets the last element of the looped inputs
+
+
+        if (playerThrewExtended.equalsIgnoreCase(computerChosenSignString)) {
+            winScenario = DRAW;
+            playerScore = playerScore + 50;
+        } else {
+
+        for (int i = 0; i < deckSize; i++) {
+            if (winLineUp[i].equalsIgnoreCase(computerChosenSignString))
+                tempIntForWinEval = i;
+            return;
+        }
+
+    }
+        if(tempIntForWinEval>(deckSize-1)/2){
+            winScenario=COMPUTER_WINS;
+            playerScore = playerScore + 0;
+        } else if (tempIntForWinEval<=(deckSize-1)/2 ) {
+            winScenario=PLAYER_WINS;
+            playerScore = playerScore + 100;
+        }else {
+
+            System.out.print("Something went wrong!!");
+
+        }
+
+
+    }
+
+
+    public void getComputerMove() {
+
+        Random generateComputerMove = new Random();
+
+        computerThrew = generateComputerMove.nextInt(3) + 1;
+
+        if (computerThrew == PLAYED_SCISSORS) {
+            computerChosenSignString = SCISSORS;
+        } else if (computerThrew == PLAYED_ROCK) {
+            computerChosenSignString = ROCK;
+        } else if (computerThrew == PLAYED_PAPER) {
+            computerChosenSignString = PAPER;
+        } else {
+            System.out.print("The computer chose an invalid sign");
+        }
+
+    }
+    public void evaluateWin() {
+
+        if (playerThrew == computerThrew) {
+            winScenario = DRAW;
+            playerScore = playerScore + 50;
+        } else if (playerThrew == PLAYED_PAPER && computerThrew == PLAYED_ROCK) {
+            winScenario = PLAYER_WINS;
+            playerScore = playerScore + 100;
+        } else if (playerThrew == PLAYED_SCISSORS && computerThrew == PLAYED_PAPER) {
+            winScenario = PLAYER_WINS;
+            playerScore = playerScore + 100;
+        } else if (playerThrew == PLAYED_ROCK && computerThrew == PLAYED_SCISSORS) {
+            winScenario = PLAYER_WINS;
+            playerScore = playerScore + 100;
+        } else if (playerThrew == PLAYED_EXIT) {
+            winScenario = PLAYED_EXIT;
+        }else if (playerThrew == PLAYED_DISPLAY_RATING) {
+            winScenario = PLAYED_DISPLAY_RATING;
+        }else {
+            winScenario = COMPUTER_WINS;
+            playerScore = playerScore + 0;                // for ease of reading.
+        }
+
+    }
+    public void displayResult() {
+
+        switch (winScenario) {
+            case DRAW:
+                System.out.printf("There is a draw (%s)%n", computerChosenSignString);
+                return;
+            case PLAYER_WINS:
+                System.out.printf("Well done. The computer chose %s and failed %n", computerChosenSignString);
+                return;
+            case COMPUTER_WINS:
+                System.out.printf("Sorry, but the computer chose %s %n", computerChosenSignString);
+                return;
+            case DISPLAY_EXIT:
+                System.out.print("Bye!");
+                return;
+            case DISPLAY_RATING:
+                System.out.printf("Your rating: %d%n", playerScore);
+                return;
+            default:
+                return;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Main game = new Main();
+
+
+        game.importExternalRating();
+        game.getExtendedGameDeck();
+
+        while (game.running && !game.extendedGame) {
+            game.getPlayerMove();
+            game.getComputerMove();
+            game.evaluateWin();
+            game.displayResult();
+        }
+
+        while (game.running && game.extendedGame){
+
+            game.extendedPlayerMove();
+            game.extendedComputerMove();
+            game.extendedEvaluateWin();
+            game.displayResult();
+//
+        }
+
+    }
+}

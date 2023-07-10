@@ -1,0 +1,125 @@
+package numbers;
+
+import java.util.Scanner;
+import java.io.IOException;
+
+/*
+Ex.1 Buzz number
+    -input exception handling     -OK
+    -if number is divisible by 7  -OK
+    -if the number ends with 7    -OK
+ */
+
+
+public class Main {
+
+    protected int playerInput=0;
+    final protected int BUZZ_NUMBER = 7;
+    protected boolean running= true;
+
+    protected void getPlayerInput() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a natural number: \n");
+        playerInput = scanner.nextInt();
+
+        if (playerInput <= 0) {
+            throw new IllegalArgumentException("Number must be natural!");
+        }
+
+    }
+
+    protected class Division extends Main {
+        protected boolean isDivisibleBySeven(int playerInput) {
+            boolean isDivisible = false;
+
+            if (playerInput % 7 == 0) {
+                isDivisible = true;
+            } else {
+                isDivisible = false;
+            }
+
+            return isDivisible;
+
+        }
+
+    }
+
+        protected class TextOperations extends Main {
+
+        protected boolean endsWithSeven(int playerInput) {
+
+            boolean endsWithBuzzNumber = false;
+
+            String tempNumberAsString = String.valueOf(playerInput);
+
+            int playerInputLength = tempNumberAsString.length();
+
+            if (tempNumberAsString.charAt(playerInputLength-1) == '7') {    // made it a mystery number for debug.
+                endsWithBuzzNumber = true;
+            } else {
+                endsWithBuzzNumber = false;
+            }
+
+            return endsWithBuzzNumber;
+        }
+    }
+
+        protected class Multiplication extends Main {
+
+        }
+
+        protected class Addition extends Main {
+
+
+        }
+
+        protected class Subtraction extends Main {
+
+
+        }
+
+        protected class Operations extends Main {
+            Division buzzDivision = new Division();
+            TextOperations buzzTextOperations = new TextOperations();
+
+            protected final int playerInput;
+
+            protected Operations(int playerInput) {
+                this.playerInput = playerInput;
+            }
+
+
+            protected void determineBuzzNumberStatus() {
+
+
+                if (buzzDivision.isDivisibleBySeven(playerInput) && buzzTextOperations.endsWithSeven(playerInput)) {
+                    System.out.printf("%d is divisible by 7 and ends with 7 %n",playerInput);
+                    return;
+                }
+
+                if (buzzDivision.isDivisibleBySeven(playerInput)) {
+                    System.out.printf("%d is divisible by 7 %n",playerInput);
+                    return;
+                }
+                if (buzzTextOperations.endsWithSeven(playerInput)) {
+                    System.out.printf("%d ends with 7 %n ",playerInput);
+                    return;
+                } else {
+
+                }
+            }
+
+
+        }
+
+
+
+
+    public static void main(String[] args) throws IOException {
+        Main main = new Main();
+        main.getPlayerInput();
+        Operations operations = main.new Operations(main.playerInput);
+        operations.determineBuzzNumberStatus();
+
+    }
+}

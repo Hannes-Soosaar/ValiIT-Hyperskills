@@ -1,0 +1,154 @@
+package numbers;
+
+import java.util.Scanner;
+import java.io.IOException;
+import java.util.SplittableRandom;
+
+/*
+Ex.2 Duck numbers
+
+ */
+
+
+public class Main {
+
+    protected int playerInput = 0;
+    protected String numberString = "";
+    final protected char BUZZ_NUMBER = '7', DUCK_NUMBER = '0';
+    protected boolean running = true;
+
+    protected void getPlayerInput() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a natural number: \n");
+        playerInput = scanner.nextInt();
+
+    }
+
+    protected String convertIntToString(int playerInput) {
+
+        numberString = String.valueOf(playerInput);
+
+        return numberString;
+
+    }
+
+    protected class Division extends Main {
+        protected boolean isDivisibleBySeven(int playerInput) {
+            boolean isDivisible = false;
+
+            if (playerInput % 7 == 0) {
+                isDivisible = true;
+            } else {
+                isDivisible = false;
+            }
+
+            return isDivisible;
+
+        }
+
+    }
+
+    protected class TextOperations extends Main {
+
+        protected boolean endsWithSeven(int playerInput) {
+
+            boolean endsWithBuzzNumber = false;
+
+            String tempNumberAsString = String.valueOf(playerInput);
+
+            int playerInputLength = tempNumberAsString.length();
+
+            if (tempNumberAsString.charAt(playerInputLength - 1) == BUZZ_NUMBER) {
+                endsWithBuzzNumber = true;
+            } else {
+                endsWithBuzzNumber = false;
+            }
+
+            return endsWithBuzzNumber;
+        }
+    }
+
+    protected class Operations extends Main {
+        Division buzzDivision = new Division();
+        TextOperations buzzTextOperations = new TextOperations();
+
+        protected int playerInput;
+        protected String numberString;
+
+        protected Operations(int playerInput, String numberString) {         // loads the preset from the super class to the current class
+            this.numberString = numberString;
+            this.playerInput = playerInput;
+        }
+
+
+        protected boolean determineEvenOrOdd(int playerInput) {
+            boolean isEven = false;
+            if (playerInput % 2 == 0) {
+                isEven = true;
+
+            } else {
+                isEven = false;
+            }
+            return isEven;
+        }
+
+        protected boolean determineDuckNumber(String numberString) {
+            boolean isDuckNumber = false;
+            int lengthOfString = (numberString.length() - 1);
+
+            for (int i = 0; i <= lengthOfString; i++) {
+                char tempNumber = numberString.charAt(i);
+
+                if (DUCK_NUMBER == tempNumber) {
+                    System.out.print(tempNumber);
+                    isDuckNumber = true;
+                }
+            }
+            return isDuckNumber;
+        }
+
+
+        protected boolean determineBuzzNumberStatus() {
+            boolean endsSeven = buzzTextOperations.endsWithSeven(playerInput);
+            boolean dividesSeven = buzzDivision.isDivisibleBySeven(playerInput);
+
+            if (endsSeven || dividesSeven) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        protected void printResult(boolean isEven) {
+
+            boolean isBuzz = determineBuzzNumberStatus();
+            boolean isDuck = determineDuckNumber(numberString);
+
+            if (playerInput <= 0) {
+                System.out.print("This number is not natural!");
+                return;
+            }
+
+            System.out.printf("Properties of %d%n", playerInput);
+            System.out.printf("even: %b%n", isEven);
+            System.out.printf("odd: %b%n", !isEven);
+            System.out.printf("buzz: %b%n", isBuzz);
+            System.out.printf("duck: %b%n", isDuck);
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        Main main = new Main();
+
+//            while (main.running) {
+        main.getPlayerInput();
+        main.convertIntToString(main.playerInput);
+        Operations operations = main.new Operations(main.playerInput, main.numberString);
+        operations.printResult(operations.determineEvenOrOdd(operations.playerInput));
+
+//            }
+    }
+
+}

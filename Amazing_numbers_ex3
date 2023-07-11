@@ -1,0 +1,224 @@
+package numbers;
+
+import java.util.Scanner;
+import java.io.IOException;
+import java.util.SplittableRandom;
+
+/*
+Ex.3
+Welcome users; - OK
+Display the instructions; -OK
+Ask for a request; - OK
+Terminate the program if a user enters zero; - OK
+If a number is not natural, print an error message; -OK
+Print the properties of the natural number; -  OK
+Continue execution from step 3, after the request has been processed. - OK
+ */
+
+
+public class Main {
+
+    protected long playerInput = 0;
+    protected String numberString = "";
+    final protected char BUZZ_NUMBER = '7', DUCK_NUMBER = '0';
+    protected boolean running = true;
+    int counter = 0;
+
+    protected void getPlayerInput() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        if (counter == 0) {
+            String introText = """
+                    Welcome to Amazing Numbers!
+                     
+                      Supported requests:
+                      - enter a natural number to know its properties ;
+                      - enter 0 to exit.
+                                    
+                    Enter a request: 
+                    """;
+
+            System.out.println(introText);
+            counter++;
+        } else {
+            System.out.println("\nEnter a request: \n");
+            counter++;                                              // keeps score of how many request you have made.
+        }
+
+        playerInput = scanner.nextLong();
+
+    }
+
+    protected void updateRunning() {
+
+        if (playerInput == 0) {
+            running = false;
+        }
+
+    }
+
+    protected String convertIntToString(long playerInput) {
+
+        numberString = String.valueOf(playerInput);
+
+        return numberString;
+
+    }
+
+// beginning of subclasses
+    
+    protected class Division extends Main {
+        protected boolean isDivisibleBySeven(long playerInput) {
+            boolean isDivisible = false;
+
+            if (playerInput % 7 == 0) {
+                isDivisible = true;
+            } else {
+                isDivisible = false;
+            }
+
+            return isDivisible;
+
+        }
+
+    }
+
+    protected class TextOperations extends Main {
+
+        protected boolean endsWithSeven(long playerInput) {
+
+            boolean endsWithBuzzNumber = false;
+
+            String tempNumberAsString = String.valueOf(playerInput);
+
+            int playerInputLength = tempNumberAsString.length();
+
+            if (tempNumberAsString.charAt(playerInputLength - 1) == BUZZ_NUMBER) {
+                endsWithBuzzNumber = true;
+            } else {
+                endsWithBuzzNumber = false;
+            }
+
+            return endsWithBuzzNumber;
+        }
+    }
+    
+// Beginning of the main subclass
+    
+    protected class Operations extends Main {
+        Division buzzDivision = new Division();             // let's bring the method into Operations 
+        TextOperations buzzTextOperations = new TextOperations(); // let's bring the method into Operations
+
+        protected long playerInput;
+        protected String numberString;
+
+        protected Operations(long playerInput, String numberString, boolean running) {
+            this.numberString = numberString;
+            this.playerInput = playerInput;
+            this.running = running;
+        }
+
+
+        protected boolean determineEvenOrOdd(long playerInput) {
+            boolean isEven = false;
+            if (playerInput % 2 == 0) {
+                isEven = true;
+
+            } else {
+                isEven = false;
+            }
+            return isEven;
+        }
+
+        protected boolean determinePalindromic(String numberString) {
+            
+            int arrayLengthOfString = numberString.length();
+            int matchingNumbers = 0;
+
+            char[] tempBackwardsString = new char[arrayLengthOfString];
+
+            for (int i = 0; i < arrayLengthOfString; i++) {
+                tempBackwardsString[i] = numberString.charAt((arrayLengthOfString - 1) - i);
+            }
+
+            for (int i = 0; i < arrayLengthOfString; i++) {
+
+                if (tempBackwardsString[i] == numberString.charAt(i)) {
+                    matchingNumbers++;
+                }
+            }
+
+            if (matchingNumbers == numberString.length()) {
+                return true;
+            }
+            return false;
+        }
+
+        protected boolean determineDuckNumber(String numberString) {
+
+            long lengthOfString = (numberString.length() - 1);
+
+            for (int i = 0; i <= lengthOfString; i++) {
+                char tempNumber = numberString.charAt(i);
+
+                if (DUCK_NUMBER == tempNumber) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        protected boolean determineBuzzNumberStatus() {
+            boolean endsSeven = buzzTextOperations.endsWithSeven(playerInput);
+            boolean dividesSeven = buzzDivision.isDivisibleBySeven(playerInput);
+
+            if (endsSeven || dividesSeven) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        protected void printResult(boolean isEven) {
+
+            boolean isBuzz = determineBuzzNumberStatus();
+            boolean isDuck = determineDuckNumber(numberString);
+            boolean isPalindromic = determinePalindromic(numberString);
+            if (playerInput < 0) {
+                System.out.print("The first parameter should be a natural number or zero.\n");
+                return;
+            }
+
+            if (playerInput == 0) {
+                System.out.print("Goodbye!");
+                return;
+            }
+
+            System.out.printf("Properties of %d%n", playerInput);
+            System.out.printf("even: %b%n", isEven);
+            System.out.printf("odd: %b%n", !isEven);
+            System.out.printf("buzz: %b%n", isBuzz);
+            System.out.printf("duck: %b%n", isDuck);
+            System.out.printf("palindromic: %b%n", isPalindromic);
+
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        Main main = new Main();
+
+        while (main.running) {
+            main.getPlayerInput();
+            main.convertIntToString(main.playerInput);
+            Operations operations = main.new Operations(main.playerInput, main.numberString, main.running);
+            operations.printResult(operations.determineEvenOrOdd(operations.playerInput));
+            main.updateRunning();
+
+        }
+    }
+
+}

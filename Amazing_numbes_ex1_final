@@ -1,0 +1,150 @@
+package numbers;
+
+import java.util.Scanner;
+import java.io.IOException;
+
+/*
+No comments.
+ */
+
+
+public class Main {
+
+    protected int playerInput = 0;
+    final protected char BUZZ_NUMBER = '7'; // as it has no other use than to compare the data type has been changed
+    protected boolean running = true;
+
+    protected void getPlayerInput() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a natural number: \n");
+        playerInput = scanner.nextInt();
+
+
+    }
+
+    protected class Division extends Main {
+        protected boolean isDivisibleBySeven(int playerInput) {
+            boolean isDivisible = false;
+
+            if (playerInput % 7 == 0) {
+                isDivisible = true;
+            } else {
+                isDivisible = false;
+            }
+
+            return isDivisible;
+
+        }
+
+    }
+
+    protected class TextOperations extends Main {
+
+        protected boolean endsWithSeven(int playerInput) {
+
+            boolean endsWithBuzzNumber = false;
+
+            String tempNumberAsString = String.valueOf(playerInput);
+
+            int playerInputLength = tempNumberAsString.length();
+
+            if (tempNumberAsString.charAt(playerInputLength - 1) == BUZZ_NUMBER) { // too complicated
+                endsWithBuzzNumber = true;
+            } else {
+                endsWithBuzzNumber = false;
+            }
+
+            return endsWithBuzzNumber;
+        }
+    }
+
+    protected class Multiplication extends Main {
+
+    }
+
+    protected class Addition extends Main {
+
+
+    }
+
+    protected class Subtraction extends Main {
+
+
+    }
+
+    protected class Operations extends Main {
+        Division buzzDivision = new Division();
+        TextOperations buzzTextOperations = new TextOperations();
+
+        protected int playerInput;
+
+        protected Operations(int playerInput) {         // loads the preset from the super class to the current class
+            this.playerInput = playerInput;
+        }
+
+        // Start methods
+
+        protected boolean determineEvenOrOdd(int playerInput) {
+            boolean isEven = false;
+            if (playerInput % 2 == 0) {
+                isEven = true;
+
+            } else {
+                isEven = false;
+            }
+            return isEven;
+        }
+
+
+        protected void determineBuzzNumberStatus() {
+            boolean isEven = determineEvenOrOdd(playerInput);
+
+            if (playerInput <= 0) {
+                System.out.print("This number is not natural!");
+//            throw new IllegalArgumentException("Number must be natural!");
+                return;
+            }
+
+
+            if (isEven) {
+                System.out.print("This number is Even. \n");
+            } else {
+                System.out.print("This number is Odd. \n");
+            }
+
+
+            if (buzzDivision.isDivisibleBySeven(playerInput) && buzzTextOperations.endsWithSeven(playerInput)) {
+
+                System.out.printf("It is a Buzz number.\n");
+                System.out.printf("%d is divisible by 7 and ends with 7 %n", playerInput);
+                return;
+            }
+
+            if (buzzDivision.isDivisibleBySeven(playerInput)) {
+                System.out.printf("It is a Buzz number.\n");
+                System.out.printf("%d is divisible by 7 %n", playerInput);
+                return;
+            }
+            if (buzzTextOperations.endsWithSeven(playerInput)) {
+                System.out.printf("It is a Buzz number.\n");
+                System.out.printf("%d ends with 7 %n ", playerInput);
+                return;
+            } else {
+                System.out.printf("It is not a Buzz number.\n");
+                System.out.printf("%d is neither divisible by 7 nor does it end with 7 ", playerInput);
+
+            }
+        }
+
+
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        Main main = new Main();
+        main.getPlayerInput();
+        Operations operations = main.new Operations(main.playerInput);
+        operations.determineBuzzNumberStatus();
+
+    }
+}

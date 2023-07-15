@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+class Main {
+
+    protected final int SECONDS_IN_HOUR = 3600, SECONDS_IN_MINUTE = 60;
+
+    protected int hoursFirst = 0;
+    protected int minutesFirst = 0;
+    protected int secondsFirst = 0;
+    protected int hoursSecond = 0;
+    protected int minuteSecond = 0;
+    protected int secondsSecond = 0;
+
+
+
+    public int getDeltaHours() {
+        int deltaHours = hoursSecond - hoursFirst;
+        return deltaHours;
+    }
+
+    public int getDeltaMinutes() {
+        int deltaMinutes = minuteSecond - minutesFirst;
+        return deltaMinutes;
+    }
+
+    public int getDeltaSeconds() {
+        int deltaSeconds = secondsSecond - secondsFirst;
+        return deltaSeconds;
+    }
+
+    protected int hoursToSeconds(int deltaHours) {
+        return deltaHours * SECONDS_IN_HOUR;
+    }
+
+    protected int minutesToSeconds(int deltaMinutes) {
+
+        return deltaMinutes * SECONDS_IN_MINUTE;
+    }
+
+
+    protected int calculateDeltaTime() {
+
+        int deltaHours = getDeltaHours();
+        int deltaMinutes = getDeltaMinutes();
+        int deltaSeconds = getDeltaSeconds();
+
+        return hoursToSeconds(deltaHours) + minutesToSeconds(deltaMinutes) + deltaSeconds;
+    }
+
+    ;
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Main main = new Main();
+        //Get the input.
+        main.hoursFirst = scanner.nextInt();
+        main.minutesFirst = scanner.nextInt();
+        main.secondsFirst = scanner.nextInt();
+        main.hoursSecond = scanner.nextInt();
+        main.minuteSecond = scanner.nextInt();
+        main.secondsSecond = scanner.nextInt();
+        // return the result to the console
+        System.out.print(main.calculateDeltaTime());
+
+
+    }
+}

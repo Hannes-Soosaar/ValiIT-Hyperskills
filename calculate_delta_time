@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
 class Main {
-
+    //final fields
     protected final int SECONDS_IN_HOUR = 3600, SECONDS_IN_MINUTE = 60;
-
+    // global fields
     protected int hoursFirst = 0;
     protected int minutesFirst = 0;
     protected int secondsFirst = 0;
     protected int hoursSecond = 0;
     protected int minuteSecond = 0;
     protected int secondsSecond = 0;
-
-
-
+    //methods
     public int getDeltaHours() {
         int deltaHours = hoursSecond - hoursFirst;
         return deltaHours;
@@ -37,7 +35,6 @@ class Main {
         return deltaMinutes * SECONDS_IN_MINUTE;
     }
 
-
     protected int calculateDeltaTime() {
 
         int deltaHours = getDeltaHours();
@@ -46,14 +43,11 @@ class Main {
 
         return hoursToSeconds(deltaHours) + minutesToSeconds(deltaMinutes) + deltaSeconds;
     }
-
-    ;
-
-
+// MAIN method
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Main main = new Main();
-        //Get the input.
+        //Get the input
         main.hoursFirst = scanner.nextInt();
         main.minutesFirst = scanner.nextInt();
         main.secondsFirst = scanner.nextInt();
@@ -62,7 +56,6 @@ class Main {
         main.secondsSecond = scanner.nextInt();
         // return the result to the console
         System.out.print(main.calculateDeltaTime());
-
 
     }
 }

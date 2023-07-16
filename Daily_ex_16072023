@@ -1,0 +1,18 @@
+
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int sideA = scanner.nextInt();
+        int sideB = scanner.nextInt();
+        int sideC = scanner.nextInt();
+
+        if (sideA + sideB > sideC && sideB + sideC > sideA && sideC + sideA > sideB) {
+            System.out.print("YES");
+        } else {
+            System.out.print("NO");
+        }
+
+    }
+}

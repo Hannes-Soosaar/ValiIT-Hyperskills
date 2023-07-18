@@ -1,0 +1,534 @@
+package numbers;
+
+import java.util.Scanner;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+
+ */
+
+class AmazingNumber {
+    private String amazingNumberName;
+    private boolean isTrueValue;
+
+    protected AmazingNumber(String amazingNumberName, boolean isTrueValue) {
+        this.amazingNumberName = amazingNumberName;
+        this.isTrueValue = isTrueValue;
+    }
+
+    protected String getAmazingNumberName() {
+        return amazingNumberName;
+    }
+
+    protected boolean isTrueValue() {
+
+        return isTrueValue;
+    }
+
+}
+
+public class Main {
+    protected long playerInput = 0;
+    protected int countOfNumbersToAnalyze = 0;
+    protected String numberString = "";
+    final protected char BUZZ_NUMBER = '7', DUCK_NUMBER = '0';
+
+    final protected String
+            DUCK = "DUCK",
+            BUZZ = "BUZZ",
+            SPY = "SPY",
+            EVEN = "EVEN",
+            ODD = "ODD",
+            PALINDROMIC = "PALINDROMIC",
+            GAPFUL = "GAPFUL";
+
+    final protected String[] optionsToChooseFrom = {DUCK, BUZZ, SPY, EVEN, ODD, PALINDROMIC, GAPFUL};
+
+    protected boolean running = true;
+    protected boolean findCase = false;
+    protected String checkProperty;
+
+    int counter = 0;
+
+    protected String getInputString() throws IOException {
+
+        Scanner scanner = new Scanner(System.in);
+
+        String inputString;
+        inputString = scanner.nextLine();
+
+        while (inputString == null || inputString.isEmpty()) {
+            System.out.print("The first parameter should be a natural number or zero. \n");
+            inputString = scanner.nextLine();
+        }
+
+
+        return inputString;
+    }
+
+
+    protected void checkStartingNumber(String firstNumber) throws IOException {
+
+        try {
+
+            playerInput = Long.parseLong(firstNumber);
+
+
+            if (playerInput < 0) {
+                System.out.print("The first parameter should be a natural number or zero. \n ");
+                counter++;
+                getPlayerInput();
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.print("The first parameter should be a natural number or zero. \n ");
+            counter++;
+            getPlayerInput();
+
+        }
+
+
+    }
+
+    protected void checkNumberToAnalyze(String secondNumber) throws IOException {
+        try {
+
+            countOfNumbersToAnalyze = Integer.parseInt(secondNumber);
+
+            if (countOfNumbersToAnalyze < 0) {
+                System.out.print("The second parameter should be a natural number. \n");
+                counter++;
+                getPlayerInput();
+            }
+
+        } catch (NumberFormatException e) {
+
+            System.out.print("The second parameter should be a natural number. \n");
+            counter++;
+            getPlayerInput();
+        }
+
+
+    }
+
+    protected void checkPropertyToSearchFor(String propertyToCheckFor) throws IOException {
+
+        String stringToCompare = propertyToCheckFor;
+
+// Missing input check!
+
+        for (int i = 0; i < optionsToChooseFrom.length; i++) {
+            if (stringToCompare.equalsIgnoreCase(optionsToChooseFrom[i])) {
+                counter++;
+                findCase = true;
+                checkProperty = stringToCompare;
+                return;
+
+            }
+        }
+        System.out.printf("The property [%S] is wrong. %n", stringToCompare.toUpperCase());
+        System.out.print("Available properties:[");
+        for (int j = 0; j < optionsToChooseFrom.length; j++) {
+            if (j == 0) {
+                System.out.print(optionsToChooseFrom[j]);
+            } else {
+                System.out.printf(", %S", optionsToChooseFrom[j]);
+            }
+        }
+        System.out.print("]\n");
+        getPlayerInput();
+    }
+
+    protected void getPlayerInput() throws IOException {
+
+        if (counter == 0) {
+            String introText = """
+                    Welcome to Amazing Numbers!
+                                        
+                    Supported requests:
+                    - enter a natural number to know its properties;
+                    - enter two natural numbers to obtain the properties of the list:
+                      * the first parameter represents a starting number;
+                      * the second parameter shows how many consecutive numbers are to be printed;
+                    - two natural numbers and a property to search for;
+                    - separate the parameters with one space;
+                    - enter 0 to exit.
+                                    
+                    Enter a request: 
+                    """;
+
+            System.out.println(introText);
+            counter++;
+        } else {
+            System.out.println("Enter a request: ");
+            counter++;                                              // keeps score of how many request you have made.
+        }
+
+        String[] components = getInputString().split(" ");
+
+
+        if (3 == components.length) {
+            checkStartingNumber(components[0]);
+            checkNumberToAnalyze(components[1]);
+            checkPropertyToSearchFor(components[2]);
+
+        } else if (2 == components.length) {
+            checkStartingNumber(components[0]);
+            checkNumberToAnalyze(components[1]);
+
+        } else if (components.length == 1) {
+            checkStartingNumber(components[0]);
+
+        } else {
+            System.out.println("Invalid input");
+        }
+
+    }
+
+    protected void updateRunning() {
+
+        if (playerInput == 0) {
+            running = false;
+        }
+
+    }
+
+    protected String convertIntToString(long playerInput) {
+
+        numberString = String.valueOf(playerInput);
+
+        return numberString;
+
+    }
+
+// beginning of subclasses
+
+    protected class Operations extends Main {
+        // Simple fields
+
+        protected long playerInput;
+        protected String numberString;
+        //        protected int countOfNumberToAnalyze;
+        protected int runs;
+        protected int foundCases = 0;
+        boolean findCase;
+
+        String checkProperty;
+
+        protected Operations(long playerInput, String numberString, boolean running, int countOfNumberToAnalyze,
+                             boolean findCase, String checkProperty) {
+
+            this.numberString = numberString;
+            this.playerInput = playerInput;
+            this.running = running;
+            this.countOfNumbersToAnalyze = countOfNumberToAnalyze;
+            this.findCase = findCase;
+            this.checkProperty = checkProperty;
+
+
+        }
+
+        protected boolean endsWithSeven(long playerInput) {
+
+            boolean endsWithBuzzNumber = false;
+
+            String tempNumberAsString = String.valueOf(playerInput);
+
+            int playerInputLength = tempNumberAsString.length();
+
+            if (tempNumberAsString.charAt(playerInputLength - 1) == BUZZ_NUMBER) {
+                endsWithBuzzNumber = true;
+            } else {
+                endsWithBuzzNumber = false;
+            }
+
+            return endsWithBuzzNumber;
+        }
+
+        protected boolean isDivisibleBySeven(long playerInput) {
+            boolean isDivisible = false;
+
+            if (playerInput % 7 == 0) {
+                isDivisible = true;
+            } else {
+                isDivisible = false;
+            }
+
+            return isDivisible;
+
+        }
+
+        protected boolean multiAnalysis() {
+            if (countOfNumbersToAnalyze > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        protected boolean determineEvenOrOdd(long playerInput) {
+            boolean isEven = false;
+            if (playerInput % 2 == 0) {
+                isEven = true;
+
+            } else {
+                isEven = false;
+            }
+            return isEven;
+        }
+
+        protected boolean determinePalindromic(long playerInput) {
+
+            String tempNumberString = Long.toString(playerInput);
+
+            int arrayLengthOfString = tempNumberString.length();
+
+            int matchingNumbers = 0;
+
+            char[] tempBackwardsString = new char[arrayLengthOfString];
+
+            for (int i = 0; i < arrayLengthOfString; i++) {
+                tempBackwardsString[i] = tempNumberString.charAt((arrayLengthOfString - 1) - i);
+            }
+
+            for (int i = 0; i < arrayLengthOfString; i++) {
+
+                if (tempBackwardsString[i] == tempNumberString.charAt(i)) {
+                    matchingNumbers++;
+                }
+            }
+
+            if (matchingNumbers == tempNumberString.length()) {
+                return true;
+            }
+            return false;
+        }
+
+        protected boolean determineDuckNumber(long playerInput) {
+
+            String tempNumberString = Long.toString(playerInput);
+
+            long lengthOfString = (tempNumberString.length() - 1);
+
+            for (int i = 0; i <= lengthOfString; i++) {
+                char tempNumber = tempNumberString.charAt(i);
+
+                if (DUCK_NUMBER == tempNumber) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected boolean determineBuzzNumberStatus() {
+            boolean endsSeven = endsWithSeven(playerInput);
+            boolean dividesSeven = isDivisibleBySeven(playerInput);
+
+            if (endsSeven || dividesSeven) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        protected boolean determineGapful(long playerInput) {
+
+            String numberString = Long.toString(playerInput);
+            if (numberString.length() < 3) {
+                return false;
+            }
+
+            int lengthOfString = numberString.length();
+            char firstNumber = numberString.charAt(0);
+            char lastNumber = numberString.charAt(lengthOfString - 1);
+            String concatenatedNumberAsString = new StringBuilder().append(firstNumber).append(lastNumber).toString();
+            long concatenatedNumber = Long.parseLong(concatenatedNumberAsString);
+            long inputNumber = Long.parseLong(numberString);
+
+            if (inputNumber % concatenatedNumber == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        protected boolean determineSpy(long playerInput) {
+
+            String numberString = Long.toString(playerInput);
+            int lengthOfString = numberString.length();
+            int tempNumberAdd = 0;
+            int tempNumberProduct = 1;              // Starts from 1 as the value is used to initiate multiplication
+            int sumOfPlayerInput = 0;
+            int productOfPlayerInput = 0;
+
+            for (int i = 0; i < lengthOfString; i++) {
+                tempNumberAdd = tempNumberAdd + Integer.parseInt(Character.toString(numberString.charAt(i)));
+
+                sumOfPlayerInput = tempNumberAdd;
+            }
+
+            for (int j = 0; j < lengthOfString; j++) {
+                tempNumberProduct = tempNumberProduct * Integer.parseInt(Character.toString(numberString.charAt(j)));
+                productOfPlayerInput = tempNumberProduct;
+            }
+
+            if (productOfPlayerInput == sumOfPlayerInput) {
+                return true;
+            }
+
+
+            return false;
+        }
+
+        protected void printResult(boolean isEven) {
+
+            boolean isBuzz = determineBuzzNumberStatus();
+            boolean isDuck = determineDuckNumber(playerInput);
+            boolean isPalindromic = determinePalindromic(playerInput);
+            boolean isGapful = determineGapful(playerInput);
+            boolean isSpy = determineSpy(playerInput);
+
+
+            if (playerInput < 0) {
+                System.out.print("The first parameter should be a natural number or zero.\n");
+                return;
+            }
+
+            if (playerInput == 0) {
+                System.out.print("Goodbye!");
+                return;
+            }
+
+
+            if (multiAnalysis() && findCase) {      // checks to see if we need to match a case and how many
+
+                // check to see if the current number matches the case.
+                for (int i = 0; i < optionsToChooseFrom.length; i++) {
+
+                    List<AmazingNumber> amazingNumbers = new ArrayList<>(); // creates a new list object
+                    amazingNumbers.add(new AmazingNumber("duck", isDuck));
+                    amazingNumbers.add(new AmazingNumber("buzz", isBuzz));
+                    amazingNumbers.add(new AmazingNumber("palindromic", isPalindromic));
+                    amazingNumbers.add(new AmazingNumber("gapful", isGapful));
+                    amazingNumbers.add(new AmazingNumber("even", isEven));
+                    amazingNumbers.add(new AmazingNumber("odd", !isEven));
+                    amazingNumbers.add(new AmazingNumber("spy", isSpy));
+
+                    StringBuilder amazingAnalysis = new StringBuilder();
+
+                    for (AmazingNumber amazingNumber : amazingNumbers) {
+                        if (amazingNumber.isTrueValue()) {
+                            if (amazingAnalysis.length() > 0) {
+                                amazingAnalysis.append(", ");
+                            }
+                            amazingAnalysis.append(amazingNumber.getAmazingNumberName());
+                        }
+
+                    }
+
+                    String fullString = amazingAnalysis.toString();
+                    String[] components = fullString.split(", ");
+
+                    for (int j = 0; j < components.length; j++) {       // need to get the sting a deconstruct it
+                        if (checkProperty.equalsIgnoreCase(components[j])) {
+                            System.out.print(playerInput + " is ");
+                            System.out.println(amazingAnalysis);
+                            foundCases++;
+                            return;
+
+                        }else if(j==components.length) {
+                            return;
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+
+
+            if (multiAnalysis() && !findCase) {
+                List<AmazingNumber> amazingNumbers = new ArrayList<>(); // creates a new list object
+                amazingNumbers.add(new AmazingNumber("duck", isDuck));
+                amazingNumbers.add(new AmazingNumber("buzz", isBuzz));
+                amazingNumbers.add(new AmazingNumber("palindromic", isPalindromic));
+                amazingNumbers.add(new AmazingNumber("gapful", isGapful));
+                amazingNumbers.add(new AmazingNumber("even", isEven));
+                amazingNumbers.add(new AmazingNumber("odd", !isEven));
+                amazingNumbers.add(new AmazingNumber("spy", isSpy));
+
+                StringBuilder amazingAnalysis = new StringBuilder();
+
+                for (AmazingNumber amazingNumber : amazingNumbers) {
+                    if (amazingNumber.isTrueValue()) {
+                        if (amazingAnalysis.length() > 0) {
+                            amazingAnalysis.append(", ");
+                        }
+                        amazingAnalysis.append(amazingNumber.getAmazingNumberName());
+                    }
+
+                }
+
+                System.out.print(playerInput + " is ");
+                System.out.println(amazingAnalysis);
+
+            } else if(!findCase) {
+
+                System.out.printf("Properties of %d%n", playerInput);
+                System.out.printf("even: %b%n", isEven);
+                System.out.printf("odd: %b%n", !isEven);
+                System.out.printf("buzz: %b%n", isBuzz);
+                System.out.printf("duck: %b%n", isDuck);
+                System.out.printf("palindromic: %b%n", isPalindromic);
+                System.out.printf("gapful: %b%n", isGapful);
+                System.out.printf("spy: %b%n", isSpy);
+            }else {
+                return;
+            }
+
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        Main main = new Main();
+
+        while (main.running) {
+            main.getPlayerInput();
+            main.convertIntToString(main.playerInput);
+
+            Operations operations = main.new Operations(main.playerInput, main.numberString,
+                    main.running, main.countOfNumbersToAnalyze, main.findCase, main.checkProperty);
+
+            if (!operations.multiAnalysis()) {
+                operations.printResult(operations.determineEvenOrOdd(operations.playerInput));
+                main.updateRunning();
+                main.countOfNumbersToAnalyze = 0;
+            } else if (!main.findCase) {
+
+                while (operations.runs < main.countOfNumbersToAnalyze) {
+                    operations.printResult(operations.determineEvenOrOdd(operations.playerInput));
+                    operations.runs++;
+                    operations.playerInput++;
+                    main.updateRunning();
+                }
+
+            } else {
+                while (operations.foundCases < main.countOfNumbersToAnalyze) {
+                    operations.printResult(operations.determineEvenOrOdd(operations.playerInput));
+                    operations.playerInput++;
+                    main.updateRunning();
+                }
+            }
+
+        }
+    }
+
+}

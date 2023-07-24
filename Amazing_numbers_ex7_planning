@@ -8,7 +8,9 @@ import java.util.List;
 
 /*
 - Create a method to check for Jumping numbers.
--
+- Create enum with the following - Names of operations, name of operations as string, impossible pairings.
+- Create method to check for spy numbers using the modulo to get the number.
+- Redo the
 
  */
 class AmazingNumber {
@@ -30,6 +32,10 @@ class AmazingNumber {
     }
 
 }
+
+
+
+
 
 public class Main {
     protected long playerInput = 0;     // OK
@@ -497,6 +503,21 @@ public class Main {
             return false;
         }
 
+        protected boolean deteminJumping(long playerInput) {
+            long input = playerInput;
+
+            // can we make it so taht it
+
+            while (input>0){
+                long reminder = input % 10; // returns the last number smaller than 10
+                input  = input/10;
+            }
+
+
+
+            return false;
+        }
+
         protected boolean isNotEmpty(String findCase) {
 
             if (findCase == null) {
@@ -509,6 +530,7 @@ public class Main {
             return false;
         }
 
+
         protected void printResult(boolean isEven) {
 
             boolean isBuzz = determineBuzzNumberStatus();
@@ -519,7 +541,7 @@ public class Main {
             boolean isSunny = determineSunny(playerInput);
             boolean isSquare = determineSquare(playerInput);
             boolean hasFindCase = isNotEmpty(checkProperty);
-            boolean hasSecondFindCase = isNotEmpty(secondCheckProperty);
+            boolean hasSecondFindCase = isNotEmpty(secondCheckProperty); //  refactor to has multiple match cases
             int printFindCase = 0;
 
 

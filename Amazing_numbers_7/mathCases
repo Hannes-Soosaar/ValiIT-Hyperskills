@@ -1,0 +1,35 @@
+package numbers;
+
+public enum mathCases {
+    DUCK("DUCK",false,"SPY"),
+
+    BUZZ("BUZZ",false,"NA"),
+
+    SPY("SPY",false,"DUCK"),
+
+    EVEN("EVEN",false,"ODD"),
+
+    ODD("ODD",false,"EVEN"),
+
+    PALINDROMIC("PALINDROMIC",false,"NA"),
+
+    GAPFUL("GAPFUL",false,"NA"),
+
+    SQUARE("SQUARE",false,"SUNNY"),
+
+    SUNNY("SUNNY",false,"SQUARE"),
+
+    JUMPING("JUMPIN",false,"NA");
+
+    final String nameOfOperation;
+    boolean searchFor;
+    final String mutuallyExclusive;
+    mathCases(String nameOfOperation, boolean searchFor, String mutuallyExclusive){
+
+        this.nameOfOperation=nameOfOperation;
+        this.searchFor=searchFor;
+        this.mutuallyExclusive= mutuallyExclusive;
+
+    }
+
+}

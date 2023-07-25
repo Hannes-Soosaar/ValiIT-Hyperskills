@@ -1,0 +1,22 @@
+package numbers;
+
+public class AmazingNumber {
+
+    private String amazingNumberName;
+    private boolean isTrueValue;
+
+    protected AmazingNumber(String amazingNumberName, boolean isTrueValue) {
+        this.amazingNumberName = amazingNumberName;
+        this.isTrueValue = isTrueValue;
+    }
+
+    protected String getAmazingNumberName() {
+        return amazingNumberName;
+    }
+
+    protected boolean isTrueValue() {
+
+        return isTrueValue;
+    }
+
+}

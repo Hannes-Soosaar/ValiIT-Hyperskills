@@ -7,32 +7,15 @@ import java.util.List;
 
 
 /*
-- Create a method to check for Jumping numbers.
-- Create enum with the following - Names of operations, name of operations as string, impossible pairings.
-- Create method to check for spy numbers using the modulo to get the number.
-- Redo the
+- Create a method to check for Jumping numbers. -OK
+- Create enum with the following - Names of operations, name of operations as string, impossible.- OK
+- Create method to check for spy numbers - OK
+- Create a method to toggle enum boolean switch - OK
+- Create a method to print wrong input - OK
+- Create a method to print available options - OK
+- Create method to extract string values from enums toggled to true- NOK
 
  */
-//class AmazingNumber {
-//    private String amazingNumberName;
-//    private boolean isTrueValue;
-//
-//    protected AmazingNumber(String amazingNumberName, boolean isTrueValue) {
-//        this.amazingNumberName = amazingNumberName;
-//        this.isTrueValue = isTrueValue;
-//    }
-//
-//    protected String getAmazingNumberName() {
-//        return amazingNumberName;
-//    }
-//
-//    protected boolean isTrueValue() {
-//
-//        return isTrueValue;
-//    }
-//
-//}
-
 
 
 public class Main {
@@ -41,27 +24,17 @@ public class Main {
     protected String numberString = "";         // OK
     final protected char BUZZ_NUMBER = '7', DUCK_NUMBER = '0';  // ok to move to the method
 
-//    final protected String      // check how to do this as an enum
-//            DUCK = "DUCK",
-//            BUZZ = "BUZZ",
-//            SPY = "SPY",
-//            EVEN = "EVEN",
-//            ODD = "ODD",
-//            PALINDROMIC = "PALINDROMIC",
-//            GAPFUL = "GAPFUL",
-//            SQUARE = "SQUARE",
-//            SUNNY = "SUNNY",
-//            JUMPING = "JUMPING";
-//
-//    final protected String[] optionsToChooseFrom = {DUCK, BUZZ, SPY, EVEN, ODD, PALINDROMIC, GAPFUL, SQUARE, SUNNY, JUMPING};
-
     protected boolean running = true;
     protected boolean findCase = false;
     protected String checkProperty;         // remove
     protected String secondCheckProperty;       // remove
     protected boolean firstPropertyIsWrong = false;     //remove
     protected boolean secondPropertyIsWrong = false;    // remove
+
+    protected StringBuilder wrongInputs = new StringBuilder("");
+
     int counter = 0;
+    protected int wrongInputCounter = 0;
 
     protected String getInputString() throws IOException {
 
@@ -100,7 +73,7 @@ public class Main {
         }
 
 
-    }
+    }  // OK to keep
 
     protected void checkNumberToAnalyze(String secondNumber) throws IOException {
         try {
@@ -121,112 +94,156 @@ public class Main {
         }
 
 
-    } // OK to keep
-
-    protected void checkPropertyToSearchFor(String propertyToCheckFor) throws IOException {
-
-        String stringToCompare = propertyToCheckFor;
-
-        for (int i = 0; i < optionsToChooseFrom.length; i++) {
-            if (stringToCompare.equalsIgnoreCase(optionsToChooseFrom[i])) {
-                counter++;
-                findCase = true;
-                checkProperty = stringToCompare;
-                return;
-
-            }
-        }
-
-        System.out.printf("The property [%S] is wrong. %n", stringToCompare.toUpperCase());
-        System.out.print("Available properties:[");
-        for (int j = 0; j < optionsToChooseFrom.length; j++) {
-            if (j == 0) {
-                System.out.print(optionsToChooseFrom[j]);
-            } else {
-                System.out.printf(", %S", optionsToChooseFrom[j]);
-            }
-        }
-        System.out.print("]\n");
-
-        getPlayerInput();
-    } // This need to be consolidated
-
-
-    protected void checkPropertyToSearchFor(String propertyToCheckFor, String secondCheckProperty) throws IOException {
-
-        String stringToCompare = propertyToCheckFor;
-        String existSecond = secondCheckProperty;
-
-        for (int i = 0; i < optionsToChooseFrom.length; i++) {
-            if (stringToCompare.equalsIgnoreCase(optionsToChooseFrom[i])) {
-                counter++;
-                findCase = true;
-                checkProperty = stringToCompare;
-                firstPropertyIsWrong = false;
-                return;
-
-            }
-        }
-        firstPropertyIsWrong = true;
     }
-    // This need to be consolidated
 
-    protected void checkSecondPropertyToSearchFor(String propertyToCheckFor2, String propertyToCheckFor)
-            throws IOException {
+    protected void checkPropertyToSearchFor(String[] components) throws IOException {
 
-        secondPropertyIsWrong = true;
+        // the first two components contain count information hence the magic number 2.
 
-        String stringToCompare = propertyToCheckFor2;
+        for (int i = 2; i < components.length; i++) {
+            String compareComponent = components[i]; // get string component to compare starting from the 3rd element
+            for (MathCases caseValue : MathCases.values()) {       // iterates through all Enum values
 
-        if (propertyToCheckFor.equalsIgnoreCase(SUNNY) && propertyToCheckFor2.equalsIgnoreCase(SQUARE)
-                || propertyToCheckFor.equalsIgnoreCase(SQUARE) && propertyToCheckFor2.equalsIgnoreCase(SUNNY)) {
-            System.out.printf("The Request contains mutually exclusive properties: [%s, %s]%n",
-                    propertyToCheckFor.toUpperCase(), propertyToCheckFor2.toUpperCase());
-            getPlayerInput();
-        } else if (propertyToCheckFor.equalsIgnoreCase(EVEN) && propertyToCheckFor2.equalsIgnoreCase(ODD)
-                || propertyToCheckFor.equalsIgnoreCase(ODD) && propertyToCheckFor2.equalsIgnoreCase(EVEN)) {
-            System.out.printf("The Request contains mutually exclusive properties: [%s, %s]%n",
-                    propertyToCheckFor.toUpperCase(), propertyToCheckFor2.toUpperCase());
-            getPlayerInput();
-        } else if (propertyToCheckFor.equalsIgnoreCase(DUCK) && propertyToCheckFor2.equalsIgnoreCase(SPY)
-                || propertyToCheckFor.equalsIgnoreCase(SPY) && propertyToCheckFor2.equalsIgnoreCase(DUCK)) {
-            System.out.printf("The Request contains mutually exclusive properties: [%s, %s]%n",
-                    propertyToCheckFor.toUpperCase(), propertyToCheckFor2.toUpperCase());
-            getPlayerInput();
-        }
+                if (caseValue.getNameOfOperation().equalsIgnoreCase(compareComponent)) {
+                    caseValue.setSearchFor(true);   // if match is not found the value remains false
 
-        for (int i = 0; i < optionsToChooseFrom.length; i++) {
-            if (stringToCompare.equalsIgnoreCase(optionsToChooseFrom[i])) {
-                counter++;
-                secondCheckProperty = stringToCompare;
-                secondPropertyIsWrong = false;
+                } else {        // handles wrong values
+                    wrongInputs.append(caseValue.getNameOfOperation() + " "); // creates a string with wrong values.
+                    wrongInputCounter++; // method for wrong input goes here.
+                }
+
             }
+            counter++;                  //  let's leave it in for now.
+            printWrongValue(wrongInputCounter, wrongInputs);
 
+            findCase = true;
         }
 
-        if (firstPropertyIsWrong && secondPropertyIsWrong) {
-            System.out.printf("The properties [%S] and [%S] are wrong. %n", propertyToCheckFor.toUpperCase(), stringToCompare.toUpperCase());
-        } else if (!firstPropertyIsWrong && secondPropertyIsWrong) {
-            System.out.printf("The property [%S] is wrong. %n", stringToCompare.toUpperCase());
-        } else if (firstPropertyIsWrong && !secondPropertyIsWrong) {
-            System.out.printf("The property [%S] is wrong. %n", propertyToCheckFor.toUpperCase());
-        } else {
-            return;
-        }
+    }
 
-        System.out.print("Available properties:[");
+    protected void printOptions() {
+        int j = 0;
 
-        for (int j = 0; j < optionsToChooseFrom.length; j++) {
+        System.out.print("Available properties: [");
+        for (MathCases mathCases : MathCases.values()) {
             if (j == 0) {
-                System.out.print(optionsToChooseFrom[j]);
+                System.out.print(mathCases.getNameOfOperation());
+                j++;
             } else {
-                System.out.printf(", %S", optionsToChooseFrom[j]);
+                System.out.print(", " + mathCases.getNameOfOperation());
+
             }
         }
         System.out.print("]\n");
+        j = 0;
 
-        getPlayerInput();
-    }           // This need to be consolidated
+    }
+
+    protected void printWrongValue(int wrongInputCounter, StringBuilder wrongInputs) throws IOException {
+
+        String[] wrongSearchInput = wrongInputs.toString().split(" ");
+        int counter = 0;
+
+        if (wrongInputCounter == 0) {
+            return;
+        } else if (wrongInputCounter == 1) {
+            System.out.printf("The property [%S] is wrong", wrongSearchInput[0]);
+
+        } else if (wrongInputCounter > 1) {
+            System.out.print("The properties[");
+            for (int i = 0; wrongSearchInput.length > i; i++) {
+                if (counter == 0) {
+                    System.out.print(wrongSearchInput[i]);
+                    counter++;
+                } else {
+                    System.out.print(", " + wrongSearchInput[i]);
+                }
+
+            }
+            System.out.print("] are wrong");
+            counter = 0;
+
+            getPlayerInput();
+        }
+
+    } // OK
+//
+//        protected void checkPropertyToSearchFor (String propertyToCheckFor, String secondCheckProperty) throws
+//        IOException {
+//
+//            String stringToCompare = propertyToCheckFor;
+//            String existSecond = secondCheckProperty;
+//
+//            for (int i = 0; i < optionsToChooseFrom.length; i++) {
+//                if (stringToCompare.equalsIgnoreCase(optionsToChooseFrom[i])) {
+//                    counter++;
+//                    findCase = true;
+//                    checkProperty = stringToCompare;
+//                    firstPropertyIsWrong = false;
+//                    return;
+//
+//                }
+//            }
+//            firstPropertyIsWrong = true;
+//        }
+//
+
+//   protected void checkSecondPropertyToSearchFor(String propertyToCheckFor2, String propertyToCheckFor)
+//            throws IOException {
+//
+//        secondPropertyIsWrong = true;
+//
+//        String stringToCompare = propertyToCheckFor2;
+//
+//        if (propertyToCheckFor.equalsIgnoreCase(SUNNY) && propertyToCheckFor2.equalsIgnoreCase(SQUARE)
+//                || propertyToCheckFor.equalsIgnoreCase(SQUARE) && propertyToCheckFor2.equalsIgnoreCase(SUNNY)) {
+//            System.out.printf("The Request contains mutually exclusive properties: [%s, %s]%n",
+//                    propertyToCheckFor.toUpperCase(), propertyToCheckFor2.toUpperCase());
+//            getPlayerInput();
+//        } else if (propertyToCheckFor.equalsIgnoreCase(EVEN) && propertyToCheckFor2.equalsIgnoreCase(ODD)
+//                || propertyToCheckFor.equalsIgnoreCase(ODD) && propertyToCheckFor2.equalsIgnoreCase(EVEN)) {
+//            System.out.printf("The Request contains mutually exclusive properties: [%s, %s]%n",
+//                    propertyToCheckFor.toUpperCase(), propertyToCheckFor2.toUpperCase());
+//            getPlayerInput();
+//        } else if (propertyToCheckFor.equalsIgnoreCase(DUCK) && propertyToCheckFor2.equalsIgnoreCase(SPY)
+//                || propertyToCheckFor.equalsIgnoreCase(SPY) && propertyToCheckFor2.equalsIgnoreCase(DUCK)) {
+//            System.out.printf("The Request contains mutually exclusive properties: [%s, %s]%n",
+//                    propertyToCheckFor.toUpperCase(), propertyToCheckFor2.toUpperCase());
+//            getPlayerInput();
+//        }
+//
+//        for (int i = 0; i < optionsToChooseFrom.length; i++) {
+//            if (stringToCompare.equalsIgnoreCase(optionsToChooseFrom[i])) {
+//                counter++;
+//                secondCheckProperty = stringToCompare;
+//                secondPropertyIsWrong = false;
+//            }
+//
+//        }
+//
+//        if (firstPropertyIsWrong && secondPropertyIsWrong) {
+//            System.out.printf("The properties [%S] and [%S] are wrong. %n", propertyToCheckFor.toUpperCase(), stringToCompare.toUpperCase());
+//        } else if (!firstPropertyIsWrong && secondPropertyIsWrong) {
+//            System.out.printf("The property [%S] is wrong. %n", stringToCompare.toUpperCase());
+//        } else if (firstPropertyIsWrong && !secondPropertyIsWrong) {
+//            System.out.printf("The property [%S] is wrong. %n", propertyToCheckFor.toUpperCase());
+//        } else {
+//            return;
+//        }
+//
+//        System.out.print("Available properties:[");
+//
+//        for (int j = 0; j < optionsToChooseFrom.length; j++) {
+//            if (j == 0) {
+//                System.out.print(optionsToChooseFrom[j]);
+//            } else {
+//                System.out.printf(", %S", optionsToChooseFrom[j]);
+//            }
+//        }
+//        System.out.print("]\n");
+//
+//        getPlayerInput();
+//    }           // This need to be consolidated
 
 
     protected void getPlayerInput() throws IOException {
@@ -256,17 +273,11 @@ public class Main {
         }
 
         String[] components = getInputString().split(" ");
-        if (4 == components.length) {      // for this we need to get creative and incorporate the full 10  check
+
+        if (3 >= components.length) {
             checkStartingNumber(components[0]);
             checkNumberToAnalyze(components[1]);
-            checkPropertyToSearchFor(components[2], components[3]);  // remove the method and consolidate
-            checkSecondPropertyToSearchFor(components[3], components[2]);    // also checks for mutually paradox cases
-
-
-        } else if (3 == components.length) {
-            checkStartingNumber(components[0]);
-            checkNumberToAnalyze(components[1]);
-            checkPropertyToSearchFor(components[2]); // Modify this method so it searches for  paradoxes and
+//            checkPropertyToSearchFor(components[2]); // Modify this method so it searches for  paradoxes and
 
         } else if (2 == components.length) {
             checkStartingNumber(components[0]);
@@ -559,12 +570,12 @@ public class Main {
 
             int printFindCase = 0;
 
-
-            if (hasFindCase && !hasSecondFindCase) {
-                printFindCase = 1;
-            } else if (hasSecondFindCase && hasFindCase) {
-                printFindCase = 2;
-            }
+//
+//            if (hasFindCase && !hasSecondFindCase) {
+//                printFindCase = 1;
+//            } else if (hasSecondFindCase && hasFindCase) {
+//                printFindCase = 2;
+//            }
 
 
             if (playerInput < 0) {
@@ -579,7 +590,6 @@ public class Main {
 
 
             if (multiAnalysis() && findCase) {      // checks to see if we need to match a case and how many
-
                 // check to see if the current number matches the case.
                 for (int i = 0; i < optionsToChooseFrom.length; i++) {
 
@@ -611,7 +621,7 @@ public class Main {
                     String fullString = amazingAnalysis.toString();
                     String[] components = fullString.split(", ");
 
-                    switch (printFindCase) {
+                    switch (printFindCase) {        // Change this to one case only
 
                         case 1:
 
@@ -625,7 +635,7 @@ public class Main {
                             }
                             break;
 
-                        case 2:
+                        case 2: // Work on this on 01.08.2023
 
                             int foundFirstMatch = 0, foundSecondMatch = 0;
 

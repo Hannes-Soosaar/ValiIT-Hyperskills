@@ -1,0 +1,27 @@
+{
+  "MyfavoriteBooks": [ {
+    "bookName": "CleanCode",
+    "bookPublished": 2009,
+    "bookAuthor": [
+      {
+        "firstName": "Rober",
+        "lastName": "Martin"
+
+      }
+    ]
+   },
+
+  {
+  "bookName": "Sipsik",
+  "bookPublished": 2009,
+    "bookAuthor": [
+      {
+        "firstName": "Rober",
+        "lastName": "Martin"
+
+      }
+    ]
+  }
+    
+  ]
+}

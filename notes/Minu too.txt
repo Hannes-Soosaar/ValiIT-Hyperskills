@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body style="background-color: blueviolet">
+blablabla
+<p>Tere maailm!</p>
+<!--todo: HTML - HyperText Markup Language -->
+<!--todo: Conflu: HTML, CSS ja JavaScript https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141251/HTML+CSS+ja+JavaScript -->
+<!--todo: Conflu: HTML - HyperText Markup Language https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141274/HTML+-+HyperText+Markup+Language -->
+<!--todo: Conflu: HTML'i märgendid (tag'id) https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141267/HTML+i+m+rgendid+tag+id -->
+
+<!--todo: headerid-->
+<h1>The best bank in the world</h1>
+<h1>OUR BANK</h1>
+<h6>this bank belong to the group of awesome banks</h6>
+<!--&lt;!&ndash;todo: paragraph&ndash;&gt;-->
+<!--&lt;!&ndash; Siin on meie 90'ndate stiilis pank. And it's awesome! &ndash;&gt;-->
+
+<!--&lt;!&ndash;todo: <span>&ndash;&gt;-->
+<!--<p>Here is our<span style="color:red"> 90's </span>stile bank. And It's great</p>-->
+
+<!--&lt;!&ndash; span näide paragraph sees &ndash;&gt;-->
+
+<!--&lt;!&ndash;todo: <br> &ndash;&gt;-->
+
+<!--siin on rea <br> vahetus-->
+
+<!--&lt;!&ndash; tühi rida &ndash;&gt;-->
+
+<!--<h3> Our Offices </h3>-->
+<!--<ul>-->
+
+<!--    <li><h4>Tallinn</h4></li>-->
+<!--    <li><h4>Tartu</h4></li>-->
+<!--    <li><h4>Viljandi</h4></li>-->
+
+<!--</ul>-->
+
+<!--<OL>-->
+<!--    <li>My location</li>-->
+<!--    <li>Your location</li>-->
+<!--    <li>Their location</li>-->
+<!--</OL>-->
+
+<!--<img style="height: 300px" style="width: 300px"-->
+<!--     src="/8885-bank-map-s.jpg" alt="">-->
+
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--    </tr>-->
+<!--    yl-->
+<!--</table>-->
+
+
+<!--<table style="border: 1px solid yellow">-->
+<!--    <tr>-->
+<!--        <th>First Name</th>-->
+<!--        <th>Last Name</th>-->
+<!--    </tr>-->
+
+<!--    <tr>-->
+<!--        <td>Hannes</td>-->
+<!--        <td>Soosaar</td>-->
+<!--    </tr>-->
+
+<!--    <tr>-->
+<!--        <td>Rain</td>-->
+<!--        <td>Tyyr</td>-->
+<!--    </tr>-->
+
+
+<!--</table>-->
+
+<br>
+
+<label for="newCustomerName">Input name</label>
+<input type="text" name="input name" id="newCustomerFirstName" placeholder="First name"><br>
+<input type="text" name="input name" id="newCustomerLastName" placeholder="Last name"><br>
+<input type="hidden" name="Something hidden to be found!" placeholder="A box" ID="oldCustomerName">
+<input type="number" name="client age" id="newCustomerAge" placeholder="Age" max="99" min="18">
+<br>
+
+<labled for="newCustomerAeg">DOB</labled>
+<input type="number" name="your aege" id="newCustomerAegSecond">
+<br>
+<br>
+<br>
+<!--under value is what is used to communicate with the backend -->
+
+<select>
+    <!-- disabled will not allow the value to be selected, if disabled it must also be selected for it to be displayed-->
+    <!--  selected will make the value the default displayed -->
+    <option value="0" disabled selected>--Linn--</option>
+    <option value="10">Tallinn</option>
+    <option value="20">Tartu</option>
+    <option value="30">Viljandi</option>
+</select>
+<text style="color: yellow">Linn</text>
+<br>
+
+
+<br>
+
+<h3>Intro</h3>
+<textarea style="background-color: aqua " cols="5" rows="10" placeholder="hey write here"></textarea>
+
+<br>
+<br>
+<br>
+
+<h3>Gender</h3>
+
+<lable for="group1">Man</lable>
+<input type="radio" name="group1" id="genderMale" value="122" checked>
+<br>
+<lable for="group1">Woman</lable>
+<input type="radio" name="group1" id="genderFemale" value="124" >
+<br>s
+<lable for="group1">Robot</lable>
+<input type="radio" name="group1" id="genderRobot" value="127">
+<br>
+
+<!--when you add something you must do it twice-->
+
+<input type="password" name="New password" id="pwEntry" placeholder="Input new Password" value="133">
+<input type="password" name="Repeat password" id="pwReEntry" placeholder="Re enter Password"value="134">
+<br>
+<a  href="http://paigaldus.eu"><text color="red">Install the bank app</text></a>
+<!--todo: Link <a> external, internal, width-->
+<!--todo: Link <a> external, internal, width-->
+
+<!--todo: <input> checkbox -->
+<!-- Nõustsun kõikde tingumustega -->
+
+<!--todo: <input> file -->
+<!-- faili lisamine -->
+
+<!--todo: div'id -->
+<!-- mingi suva näide -->
+
+<!--todo: <button> lisa klient -->
+
+
+<!--todo: Stiilid -->
+<!--todo: Conflu: CSS https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141290/CSS -->
+<!--todo: Conflu: CSS selectorid ( võib kodus vaadata, kui huvi pakub https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141297/CSS+selectorid -->
+<!--todo: mässame veidi CSS'iga -->
+<!--todo: Reasisene stiil -->
+<!--todo: Sisemised (manustatud) stiilid -->
+<!--todo: Välised stiilid -->
+
+
+<!--todo: bootstrap -->
+<!-- grid,row,col -->
+<!-- input, table, button, jne -->
+
+
+<!--todo: Conflu: JavaScript https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141382/JavaScript -->
+
+<!--todo: <script> -->
+<!--todo: addCustomer() -->
+<!-- simple Hello World alert -->
+<!-- Hello World console.log() -->
+<!-- customerV1 objekti konstruktoriga (staatilised väärtused) -->
+<!-- console.log(customerV1), alert(customerV1) -->
+<!-- JSON.stringify() -->
+<!-- customerV2 objekt literaaliga (staatilised väärtused) -->
+<!-- customerV2 lisame peale objekti loomist juurde mingi suvalise välja -->
+<!-- customerV3 objekt literaaliga (väärtused html elementidest) -->
+
+
+<!-- Välja kommenteeritud -->
+<!--    <noscript>-->
+<!--      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>-->
+<!--    </noscript>-->
+<!--    <div id="app"></div>-->
+<!-- built files will be auto injected -->
+</body>
+</html>
+
+
+made a few changes!
+
+
+made some more changes
+
+
+--------------------
+
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="/myStyle.css">
+
+
+</head>
+<body style="background-color: aqua">
+
+
+<!--todo: HTML - HyperText Markup Language -->
+<!--todo: Conflu: HTML, CSS ja JavaScript https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141251/HTML+CSS+ja+JavaScript -->
+<!--todo: Conflu: HTML - HyperText Markup Language https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141274/HTML+-+HyperText+Markup+Language -->
+<!--todo: Conflu: HTML'i märgendid (tag'id) https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141267/HTML+i+m+rgendid+tag+id -->
+
+<!--todo: headerid-->
+<h1 class="myFavHeaderStyle">Meie pank</h1>
+<h3>Eriti äge</h3>
+
+
+<!--todo: paragraph-->
+<p>Siin on meie <span style="color: red">90'ndate</span> stiilis pank. And it's awesome!</p>
+<br>
+
+<!-- tühi rida -->
+<h3 class="myFavHeaderStyle" id="anotherAwesomeHeader">Meie panga kontorid</h3>
+<ol>
+    <li>Tallinn</li>
+    <li>Tartu</li>
+    <li>Viljandi</li>
+</ol>
+
+<h3>Meie kaart</h3>
+<img style="width: 200px" src="map.png"/>
+<!--todo: <img>, external, internal, width-->
+<!-- Kaart -->
+
+<table style="border: 1px solid black">
+    <tr>
+        <td>Eesnimi</td>
+        <td>Perekonnanimi</td>
+    </tr>
+    <tr>
+        <td>Rain</td>
+        <td>Tüür</td>
+    </tr>
+    <tr>
+        <td>Peeter-James</td>
+        <td>Bond</td>
+    </tr>
+</table>
+
+
+<br>
+<br>
+
+<h2>Uue kliendi lisamine</h2>
+
+<br>
+
+<label for="firstName">Uue kliendi eesnimi</label>
+<input type="text" id="firstName">
+<br>
+
+
+<input type="text" placeholder="perekonnanimi" id="lastName">
+
+
+<input type="hidden" placeholder="peidetud" id="customer">
+<br>
+
+<input type="number" min="16" placeholder="Vanus" id="customerAge">
+
+<br>
+<label for="customerDOB">Sünnikuupäev</label>
+<input type="date" id="customerDOB">
+
+<br>
+<br>
+<br>
+
+
+<select>
+    <option value="0" disabled selected>--Elukoha linn--</option>
+    <option value="5">Tallinn</option>
+    <option value="20">Tartu</option>
+    <option value="1">Viljandi</option>
+    <option value="1">Kiili</option>
+</select>
+<br>
+
+<br>
+<br>
+
+<h3>Tutvustus</h3>
+<textarea cols="30" rows="10" placeholder="Sinu tutvustus, sinu hobid" id="textBox1"></textarea>
+<br>
+<br>
+<h3>Sugu</h3>
+
+<label>mees</label>
+<input type="radio" name="group1" checked>
+<br>
+<label>naine</label>
+<input type="radio" name="group1">
+<br>
+<br>
+<input type="password" placeholder="teie uus parool"><br>
+<input type="password" placeholder="parooli kordus">
+<br>
+<br>
+
+
+<a href="https://www.google.com/">Google</a>
+<br>
+<a href="/tingimused.html">Terms and Conditions</a>
+<br>
+<text>Olen koigega nous</text>
+<input type="checkbox" checked>
+
+
+<input class="b" type="file" accept="image/jpeg">
+<br>
+<br>
+<br>
+
+<button type="submit" onclick="addCustomer()"
+
+>My first button
+</button>
+
+
+<br>
+<br>
+<br>
+<br>
+<script>
+
+    // addCustomer()
+
+    function addCustomer() {
+
+        const customerAge = document.getElementById("customerAge").value
+        const firstName = document.getElementById("firstName").value
+        const lastName = document.getElementById("lastName").value
+                            
+
+        const customer = {
+            firstName: firstName,
+            lastName: lastName,
+            age: customerAge
+        }
+        
+        
+
+        alert(JSON.stringify(customer))
+    }
+
+    console.log("HEYAA!")
+
+
+    function doSomething(){
+
+
+
+    }
+    //
+    // function addSecondCustomer() {
+    //
+    // }
+    //
+
+</script>
+
+<!-- Välja kommenteeritud -->
+<!--    <noscript>-->
+<!--      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>-->
+<!--    </noscript>-->
+<!--    <div id="app"></div>-->
+<!-- built files will be auto injected -->
+</body>
+</html>
+
+
+<!--todo: Stiilid -->
+<!--todo: Conflu: CSS https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141290/CSS -->
+<!--todo: Conflu: CSS selectorid ( võib kodus vaadata, kui huvi pakub https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141297/CSS+selectorid -->
+<!--todo: mässame veidi CSS'iga -->
+<!--todo: Reasisene stiil -->
+<!--todo: Sisemised (manustatud) stiilid -->
+<!--todo: Välised stiilid -->
+
+
+<!--todo: bootstrap -->
+<!-- grid,row,col -->
+<!-- input, table, button, jne -->
+
+
+<!--todo: Conflu: JavaScript https://backend2.atlassian.net/wiki/spaces/TEAM/pages/23141382/JavaScript -->
+
+<!--todo: <script> -->
+<!--todo: addCustomer() -->
+<!-- simple Hello World alert -->
+<!-- Hello World console.log() -->
+<!-- customerV1 objekti konstruktoriga (staatilised väärtused) -->
+<!-- console.log(customerV1), alert(customerV1) -->
+<!-- JSON.stringify() -->
+<!-- customerV2 objekt literaaliga (staatilised väärtused) -->
+<!-- customerV2 lisame peale objekti loomist juurde mingi suvalise välja -->
+<!-- customerV3 objekt literaaliga (väärtused html elementidest) -->

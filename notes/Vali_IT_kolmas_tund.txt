@@ -1,0 +1,107 @@
+16.08.2023 Vali IT kolmas tund  
+
+
+HTML - skelet
+CSS - stiil
+JS - funtktsionnalsus
+
+---
+
+Tehere are two main webiste types
+
+-single page 
+-multi page 
+
+
+
+Vue.js
+
+
+----
+
+For the first time  we will work backward form front to back
+
+
+
+
+"teenus" is a servive or inquiry 
+
+backend goes before fornt end 
+
+
+Agenda
+
+
+1) balsamic 
+2) Git  --> Haridega
+3) Jira --> taskid 
+4) ect.. 
+
+---note---
+
+balsamic cloud
+
+
+
+POC-- Proof of concept
+
+layer is componetn 
+
+
+CRUD- create - read- update- delete 
+
+
+
+To-do
+Inprogress
+Done
+
+
+
+
+FEB--> front end bank
+BEB--> back end bank
+
+
+Harud saavad numbri 
+
+epic--> the biggest story there is 
+Tasks --> 
+paragraph --> the smaller storry line
+
+
+
+cloud (prod)
+
+
+
+	FEB 4 @1		
+	  	
+
+PC 	FEB 4 @1-copy
+
+
+
+
+
+remot and origin  to update to the  cloud.
+
+THE personal main branch we will be working with
+
+/*
+View and Route are to be used in tandem meaning with a View there must be a rout
+*/
+
+
+
+Good vs Bad dev.
+
+A good dev. can take input from code reviews. 
+
+A good review is one, without emotions.
+
+
+
+
+
+

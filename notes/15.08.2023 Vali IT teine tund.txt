@@ -1,0 +1,146 @@
+15.08.2023 Vali IT teine tund
+
+-- GIT-- 
+
+Study and check GIT and how it works. Video in link
+
+
+---- Updateing from the cloud----
+
+Getting on the same page with Rain
+
+Stage 1 reset file  
+
+Under Git menu 
+
+Reset Head 
+
+Hard version
+
+Stage 2 
+
+Under Git menu
+
+Fetch 
+
+-Stage 3 
+
+Under Git Main branch blue arrow down or update project 
+
+
+---- Libary -----
+
+Third party licenced software that provides methods to be used in you programm language 
+
+---Framework---
+
+controlls the programm adding a layer before your programm language
+
+---- CSS History----
+
+Sepatates functionality from design
+
+
+1) in HTML element using "Style"
+
+2) in <style> tags in the headers
+
+CSS selectors
+ 3) External Css file 
+
+
+
+Git Test 2--> tehtud
+
+
+JS: (Type Script JavaScript with types ??)
+
+Does not recognize what type of data is given
+
+
+Variable type
+
+const // muutumatu 
+let //  same as var defines a variable 
+var //  same as let defines a variable
+
+
+
+
+function myFunction(input, input2) {
+
+contst tervitus =" Tere, " input + "! Teie vanus on " 
+
+
+
+}
+
+
+DOM is the most imporatnt part of  programmnig with JS  it lets yout change an HTML file on the fly 
+
+
+Compiled before runtime --  C, C++ and Java. 
+
+Interperted -- JavaScript.
+
+
+
+Asyncronouse--
+
+Exectution does not stop, (jump) waiting for a task to be completed before it startint the next 
+
+
+Using inspect source to debug
+
+Add a console log with a rnd message. to you script
+
+open the inspect source
+
+under console you can follow the index to move to the exact source point
+
+
+Homework --- check JSON video
+
+
+
+get message from browser
+
+looks for public folder and index.html within it.
+
+
+static is index HTML
+
+with the index there is  AtmsView  that holds 
+
+within the atms view there are localized location like LocationTables ect.
+
+ 
+
+
+
+
+Istall chrome extension "Vue"-- DONE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
